@@ -43,7 +43,7 @@ function goLogin(){
 		alert("Informe a senha");
 		document.getElementById('tSenha').focus();
 	} else {
-		var negocio='http://printsource.jelasticlw.com.br/gestor/loginPSmoblie';
+		var negocio='http://printsource.jelasticlw.com.br/gestor/loginPrintSourceMobile';
 	    var funcao='';
 	    var parms="&login="+login+"&senha="+senha;
 	    putMemo('retornoAx', 'retornoLogin');
