@@ -26,7 +26,8 @@ function erroLogin(erro){
 }
 function loginSucesso(tx, results){
 	var n=results.rows.length;
-	var mensagem ="Temos registros, saltar login...";
+	var mensagem ="Temos "+n+" registros, saltar login...";
+	alert(mensagem);
 	if (n == 0){
 		window.open('login.html','_top');
 	} else {
