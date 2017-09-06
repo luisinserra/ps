@@ -10,4 +10,21 @@ function onSuccesso(position){
     var longitude = position.coords.longitude;
     var msg="Coordenadas: "+latitude+" x "+longitude;
     alert(msg);
+    var codUser=localStorage.getItem("codUser");
+    enviaCoordenadas(codUser,latitude,longitude);
+}
+function enviaCoordenadas(codUser,latitude,longitude){
+    var negocio='http://printsource.jelasticlw.com.br/gestor/ws/postCoordenadas';
+    var funcao='';
+    var parms="&idUsuario="+codUser+"&longitude="+longitude+"&latitude="+latitude;
+    putMemo('retornoAx', 'retornoEnviaCoordenadas');
+    chamaJSon(negocio,funcao,parms);
+}
+function retornoEnviaCoordenadas(codigo){
+    var erro=dados.erro;
+    if (erro != ''){
+        alert("Erro: "+erro);
+    } else {
+        alert("Dados enviados com sucesso");
+    }
 }
