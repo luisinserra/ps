@@ -1,0 +1,7 @@
+.menu1 ul li a, .menu1 ul li a:visited {
+	float:left; display:block; text-decoration:none;color:#a6fd97; padding:0px 19px; line-height:45px; height:33px; border-bottom:3px solid #fff; 
+}
+
+.menu1 ul li:hover ul li a {
+	width: 154px;
+}
