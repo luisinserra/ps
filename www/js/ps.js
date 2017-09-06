@@ -27,7 +27,6 @@ function erroLogin(erro){
 function loginSucesso(tx, results){
 	var n=results.rows.length;
 	var mensagem ="Temos "+n+" registros, saltar login...";
-	alert(mensagem);
 	if (n == 0){
 		window.open('login.html','_top');
 	} else {
@@ -77,7 +76,7 @@ function sucessoGrava(){
 }
 function gravaDb(tx){
 	var codUser=localStorage.getItem("codUser");
-	valor login=localStorage.getItem("userLogin");
+	var login=localStorage.getItem("userLogin");
 	var nivel=localStorage.getItem("nivel");
 	tx.executeSql('INSERT INTO login (id, login, senha, nivel) VALUES ('+codUser+', "'+login+'","'+senha+'",'+nivel+')');
 }
