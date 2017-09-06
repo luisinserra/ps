@@ -20,11 +20,11 @@ function enviaCoordenadas(codUser,latitude,longitude){
     putMemo('retornoAx', 'retornoEnviaCoordenadas');
     chamaJSon(negocio,funcao,parms);
 }
-function retornoEnviaCoordenadas(codigo){
+function retornoEnviaCoordenadas(dados){
     var erro=dados.erro;
     if (erro != ''){
         alert("Erro: "+erro);
     } else {
-        alert("Dados enviados com sucesso");
+        alert("Checkin efetuado sucesso");
     }
 }
