@@ -9,7 +9,7 @@ function sucesso(){
 	checaLogin();
 }
 function setDB(tx){
-	tx.executeSql('CREATE TABLE IF NOT EXISTS login (id integer primary key, login text, senha text, nivel integer, base text)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS users (id integer primary key, login text, nivel text, base text)');
 }
 
 function checaLogin(){
