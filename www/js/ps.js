@@ -1,6 +1,6 @@
 function goAcesso(){
 	db = window.openDatabase("DbPrintSource", "1.0", "DbPrintSource", 10);
-	db.transaction(setDB, erroOpen, sucesso);
+	db.transaction(setDB, erroOpen, sucesso); 
 }
 function erroOpen(erro){
 	alert("Erro set database..."+erro.code+":"+erro.message);
