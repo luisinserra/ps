@@ -9,7 +9,7 @@ function sucesso(){
 	checaLogin();
 }
 function setDB(tx){
-	tx.executeSql('CREATE TABLE IF NOT EXISTS login (id integer primary key, login text, senha text, nivel integer)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS login (id integer primary key, login text, senha text, nivel integer, base text)');
 }
 
 function checaLogin(){
@@ -19,7 +19,7 @@ function errorCheca(erro){
 	alert("Erro lendo registros..."+erro.code+":"+erro.message);
 }
 function getRegistro(tx){
-	tx.executeSql('SELECT * FROM login', [], loginSucesso, erroLogin);
+	tx.executeSql('SELECT * FROM users', [], loginSucesso, erroLogin);
 }
 function erroLogin(erro){
 	alert("Erro lendo login..."+erro.code+":"+erro.message);
@@ -44,6 +44,7 @@ function goLogin(){
 		document.getElementById('tSenha').focus();
 	} else {
 		var negocio='http://printsource.jelasticlw.com.br/gestor/loginPrintSourceMobile';
+		negocio='http://mensagemvirtual.com.br/foraLoginJson';
 	    var funcao='';
 	    var parms="&login="+login+"&senha="+senha;
 	    putMemo('retornoAx', 'retornoLogin');
@@ -57,12 +58,13 @@ function retornoLogin(dados){
 	} else {
 		var codUser=dados.codUser;
 		var nivel=dados.nivel;
-		var userLogin=dados.userLogin;
-		var senha=dados.senha;
-		var senha=dados.senha;
+		var base=dados.base;
+		var userLogin=document.getElementById('tLogin').value;
+		var senha=document.getElementById('tSenha').value;
 		window.localStorage.setItem("codUser",codUser);
 		window.localStorage.setItem("nivel",nivel);
 		window.localStorage.setItem("userLogin",userLogin);
+		window.localStorage.setItem("base",base);
 		db = window.openDatabase("DbPrintSource", "1.0", "DbPrintSource", 10);
 		db.transaction(gravaDb, erroGrava, sucessoGrava);
 	}
@@ -74,9 +76,22 @@ function sucessoGrava(){
 	alert("Gravação realizada com sucesso");
 	window.open('menu.html','_top');
 }
-function gravaDb(tx){
+function gravaDb(tx){ 
 	var codUser=localStorage.getItem("codUser");
 	var login=localStorage.getItem("userLogin");
 	var nivel=localStorage.getItem("nivel");
-	tx.executeSql('INSERT INTO login (id, login, senha, nivel) VALUES ('+codUser+', "'+login+'","'+senha+'",'+nivel+')');
+	var base=localStorage.getItem("base");
+	var base=localStorage.getItem("base");
+	tx.executeSql('CREATE TABLE IF NOT EXISTS users (id integer primary key, login text, nivel text, base text)');
+	var sql='INSERT INTO users (id, login, nivel, base) VALUES ('+codUser+', '+"'"+login+"'"+',"'+nivel+'",'+"'"+base+"'"+')';
+	tx.executeSql(sql);
+	//tx.executeSql(sql,feito,erroSql);
+	//tx.executeSql(sql,erroSql, function() { alert('added row'); });
+	//alert("Inseriu");
+}
+function feito(tx,results){
+	alert("feito, "+results.rows.length);
+}
+function erroSql(erro){
+	alert("Erro inserindo..."+erro.code+":"+erro.message);
 }

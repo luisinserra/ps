@@ -25,6 +25,6 @@ function retornoEnviaCoordenadas(dados){
     if (erro != ''){
         alert("Erro: "+erro);
     } else {
-        alert("Checkin efetuado sucesso");
+        alert("Checkin efetuado com sucesso");
     }
 }
