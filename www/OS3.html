@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<htmll ng-app ng-csp>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <title>PrintSource</title> 
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/geral.css">
+    <script type="text/javascript" src="js/urlen.js"></script>
+    <script type="text/javascript" src="js/jsOS.js"></script>
+</head>
+
+<body onload="trazOs();">
+<div class="menu1" id='m1'>
+    <ul>
+        <li><a class="menu1one" href="index.html">Home</a></li>
+    </ul> 
+
+    <ul>
+        <li style="z-index: 7070;"><a class="menu1two"
+            href="javascript:k=1;">Menu <!--[if gte IE 7]><!--></a>
+            <!--<![endif]-->
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li><a href="OS.html">OS</a></li>
+                                <li><a href="checkin.html">Checkin</a></li>
+                                <li><a href="OSEquipos.html">Equipamentos</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> <!--[if lte IE 6]></a><![endif]--></li>
+    </ul>
+</div>
+
+<center>
+    <img src="img/logo_printsource.png">
+</center>
+
+<div class="container">
+    <div class="cantonado">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <b>Empresa: </b><span id="spanRazao"></span>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+<br>
+
+<span id="spanSaida" style="display: none;">
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <span style="float: right;"><b>No.</b></span>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <span id="spNos"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <span style="float: right;"><b>Aberta</b></span>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <span id="spData"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <span style="float: right;"><b>Status</b></span>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <span id="spStat"></span>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <span style="float: right;"><b>Motivo</b></span>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <span id="spMotivo"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <span style="float: right;"><b>Prazo</b></span>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <span id="spPrazo"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <span style="float: right;"><b>Defeito</b></span>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <span id="spDefeito"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <span style="float: right;"><b>Obs</b></span>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <span id="spObs"></span>
+        </div>
+    </div>
+</span>
+
+</body>
+</html>

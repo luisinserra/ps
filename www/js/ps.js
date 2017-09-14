@@ -9,7 +9,7 @@ function sucesso(){
 	checaLogin();
 }
 function setDB(tx){
-	tx.executeSql('CREATE TABLE IF NOT EXISTS users (id integer primary key, login text, nivel text, base text)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS users (id integer primary key, login text, senha text, nivel text, base text)');
 }
 
 function checaLogin(){
@@ -65,6 +65,7 @@ function retornoLogin(dados){
 		window.localStorage.setItem("nivel",nivel);
 		window.localStorage.setItem("userLogin",userLogin);
 		window.localStorage.setItem("base",base);
+		window.localStorage.setItem("senha",senha);
 		db = window.openDatabase("DbPrintSource", "1.0", "DbPrintSource", 10);
 		db.transaction(gravaDb, erroGrava, sucessoGrava);
 	}
@@ -81,9 +82,9 @@ function gravaDb(tx){
 	var login=localStorage.getItem("userLogin");
 	var nivel=localStorage.getItem("nivel");
 	var base=localStorage.getItem("base");
-	var base=localStorage.getItem("base");
-	tx.executeSql('CREATE TABLE IF NOT EXISTS users (id integer primary key, login text, nivel text, base text)');
-	var sql='INSERT INTO users (id, login, nivel, base) VALUES ('+codUser+', '+"'"+login+"'"+',"'+nivel+'",'+"'"+base+"'"+')';
+	var senha=localStorage.getItem("senha");
+	tx.executeSql('CREATE TABLE IF NOT EXISTS users (id integer primary key, login text, senha text, nivel text, base text)');
+	var sql='INSERT INTO users (id, login, nivel, base, senha) VALUES ('+codUser+', '+"'"+login+"'"+',"'+nivel+'",'+"'"+base+"','"+senha+"'"+')';
 	tx.executeSql(sql);
 	//tx.executeSql(sql,feito,erroSql);
 	//tx.executeSql(sql,erroSql, function() { alert('added row'); });
