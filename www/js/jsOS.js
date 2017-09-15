@@ -4,7 +4,7 @@ function goBuscaRazao(){
 	var url = "http://clever-jetserver.rhcloud.com/crmws/ajax/chooseRazao.jsonx?parm="+nome;
 	url='http://mensagemvirtual.com.br/foraEmpsOS.html';
 	url="http://localhost:8080/geosmarty/ajax/chooseRazao.jsonx?parm="+nome;
-	var negocio='http://localhost:8080/geosmarty/chooseFantasia';
+	var negocio='http://printsource.jelasticlw.com.br/gestor/chooseFantasia';
 	document.getElementById('spanSaida').innerHTML='';
     var funcao='';
     putMemo('encoda','S');
@@ -50,7 +50,7 @@ function getOeses(){
 	var idEmpresa=window.localStorage.getItem('idEmpresa');
 	var url = 'http://clever-jetserver.rhcloud.com/gestor/getOrdensCliente.html?login=Luis&senha=kkk&idCliente='+idEmpresa;
 	url='http://localhost:8080/geosmarty/getOrdensCliente.html?login=Luis&senha=kkk&idCliente='+idEmpresa;
-	var negocio='http://localhost:8080/geosmarty/getOrdensCliente';
+	var negocio='http://printsource.jelasticlw.com.br/gestor/getOrdensCliente';
 	var funcao='';
 	putMemo('encoda',true);
     var parms="&login="+window.localStorage.getItem('userLogin');
