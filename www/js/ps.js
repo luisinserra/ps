@@ -44,7 +44,7 @@ function goLogin(){
 		document.getElementById('tSenha').focus();
 	} else {
 		var negocio='http://printsource.jelasticlw.com.br/gestor/loginPrintSourceMobile';
-		negocio='http://mensagemvirtual.com.br/foraLoginJson';
+		//negocio='http://mensagemvirtual.com.br/foraLoginJson';
 	    var funcao='';
 	    var parms="&login="+login+"&senha="+senha;
 	    putMemo('retornoAx', 'retornoLogin');
