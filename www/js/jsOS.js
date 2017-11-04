@@ -1,10 +1,10 @@
 function goBuscaRazao(){
 	//document.getElementById('divResultado').style.display='none';
 	var nome=document.getElementById('tParm').value;
-	var url = "http://clever-jetserver.rhcloud.com/crmws/ajax/chooseRazao.jsonx?parm="+nome;
 	url='http://mensagemvirtual.com.br/foraEmpsOS.html';
 	url="http://localhost:8080/geosmarty/ajax/chooseRazao.jsonx?parm="+nome;
 	var negocio='http://printsource.jelasticlw.com.br/gestor/chooseFantasia';
+	var negocio = "http://clevermidia.com.br/printsource/chooseFantasia";
 	document.getElementById('spanSaida').innerHTML='';
     var funcao='';
     putMemo('encoda','S');
@@ -50,7 +50,7 @@ function getOeses(){
 	var idEmpresa=window.localStorage.getItem('idEmpresa');
 	var url = 'http://clever-jetserver.rhcloud.com/gestor/getOrdensCliente.html?login=Luis&senha=kkk&idCliente='+idEmpresa;
 	url='http://localhost:8080/geosmarty/getOrdensCliente.html?login=Luis&senha=kkk&idCliente='+idEmpresa;
-	var negocio='http://printsource.jelasticlw.com.br/gestor/getOrdensCliente';
+	var negocio='http://clevermidia.com.br/printsource/getOrdensCliente';
 	var funcao='';
 	putMemo('encoda',true);
     var parms="&login="+window.localStorage.getItem('userLogin');
@@ -124,5 +124,4 @@ function listaEquipamentos(dados){
 		var modelo=impressora[i].modelo;
 		var numeroSerie=impressora[i].numeroSerie;
 	}
-	var fabricante
 }

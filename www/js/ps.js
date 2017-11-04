@@ -43,7 +43,7 @@ function goLogin(){
 		alert("Informe a senha");
 		document.getElementById('tSenha').focus();
 	} else {
-		var negocio='http://printsource.jelasticlw.com.br/gestor/loginPrintSourceMobile';
+		var negocio='http://clevermidia.com.br/printsource/loginPrintSourceMobile';
 		//negocio='http://mensagemvirtual.com.br/foraLoginJson';
 	    var funcao='';
 	    var parms="&login="+login+"&senha="+senha;

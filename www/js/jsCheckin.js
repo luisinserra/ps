@@ -14,7 +14,7 @@ function onSuccesso(position){
     enviaCoordenadas(codUser,latitude,longitude);
 }
 function enviaCoordenadas(codUser,latitude,longitude){
-    var negocio='http://printsource.jelasticlw.com.br/gestor/ws/postCoordenadas';
+    var negocio='http://clevermidia.com.br/printsource/ws/postCoordenadas';
     var funcao='';
     var parms="&idUsuario="+codUser+"&longitude="+longitude+"&latitude="+latitude;
     putMemo('retornoAx', 'retornoEnviaCoordenadas');
