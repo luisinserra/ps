@@ -106,6 +106,9 @@ function trazOs(){
 function putDadosOS(){
 	var js=window.localStorage.getItem('os');
 	var os=JSON.parse(js);
+	if (os.obs == 'null'){
+		os.obs='';
+	}
 	document.getElementById('spNos').innerHTML='No. '+os.numero;
 	document.getElementById('spData').innerHTML=os.data;
 	document.getElementById('spStat').innerHTML=os.status;
@@ -134,6 +137,7 @@ function getEquiposOrdem()
 function gotListaEquipos(dados){
 	var eqs=dados.registros;
 	window.localStorage.setItem('equipos',JSON.stringify(eqs));
+	completaEquipamentos();
 }
 function completaEquipamentos(){
 	putMemo('conta',0);
@@ -248,11 +252,12 @@ function iterateEqLocal(){
 		finalizouLocais();
 	}
 }
-function getLocalEq(){
+function getLocalEq(){ 
 	var eq=getEqCorrente();
 	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasse';
     var funcao='funcao';
     var parms='&nomeTabela=GtEquipamentos&id='+eq.id+'&atributo=gtEquipamentoLocalizacao';
+    putMemo('encoda',true);
     putMemo('retornoAx', 'retornoGotLocal');
     chamaJSon(negocio,funcao,parms);
 }
@@ -276,6 +281,7 @@ function nexEqLocal(){
 }
 function finalizouLocais(){
 	console.log("Locais finalizados");
+	abreFrameEqs();
 }
 function abreFrameEqs(){
 	document.getElementById('ifraEqs').style.display='block';
@@ -285,10 +291,83 @@ function abreFrameEqs(){
 function trazEquipos(){
 	var eqs=window.localStorage.getItem('equipos');
 	eqs=JSON.parse(eqs);
+	var lenTab=555*(eqs.length);
+	var parte='<table style="width: '+lenTab+'px; margin-left: 40px;">';
+	parte+='<tr>';
+	for (var i = 0; i < eqs.length; i++) {
+		var eq=eqs[i];
+		var marca=eq.marca;
+		if (marca == 'null'){
+			marca='';
+		}
+		var modelo=eq.modelo;
+		if (modelo == ''){
+			modelo='';
+		}
+		parte+='<td>';
+		parte+='<B>Equipamento</B>';
+		parte+='</td>';
+		parte+='<td style="width: 400px;">';
+		parte+=eq.tipo+' '+eq.fabricante+' '+marca+' '+modelo;
+		parte+='</td>';
+		parte+='<td width="80">';
+		parte+='&nbsp;';
+		parte+='</td>';
+	}
+	parte+='</tr>';
+
+	parte+='<tr>';
+	for (var i = 0; i < eqs.length; i++) {
+		var eq=eqs[i];
+		parte+='<td>';
+		parte+='<B>Nº Série</B>';
+		parte+='</td>';
+		parte+='<td>';
+		parte+=eq.numeroSerie;
+		parte+='</td>';
+		parte+='<td width="80">';
+		parte+='&nbsp;';
+		parte+='</td>';
+	}
+	parte+='</tr>';
+
+	parte+='<tr>';
+	for (var i = 0; i < eqs.length; i++) {
+		var eq=eqs[i];
+		parte+='<td>';
+		parte+='<B>Localização</B>';
+		parte+='</td>';
+		parte+='<td>';
+		parte+=eq.localizacao;
+		parte+='</td>';
+		parte+='<td width="80">';
+		parte+='&nbsp;';
+		parte+='</td>';
+	}
+	parte+='</tr>';
+
+	parte+='<tr>';
+	for (var i = 0; i < eqs.length; i++) {
+		var eq=eqs[i];
+		parte+='<td>';
+		parte+='<B>Data Compra</B>';
+		parte+='</td>';
+		parte+='<td>';
+		parte+=eq.dataCompra;
+		parte+='</td>';
+		parte+='<td width="80">';
+		parte+='&nbsp;';
+		parte+='</td>';
+	}
+	parte+='</tr>';
+	parte+='</table>';
+	document.getElementById('spanEquipos').innerHTML=parte;
+/*
 	var descricao=eqs[0].descricao;
 	document.getElementById('spEqDesc').innerHTML=descricao;
 	var descricao2=eqs[1].descricao;
 	document.getElementById('spEqDesc1').innerHTML=descricao2;
+*/	
 }
 function listaEquipamentos(dados){
 	var impressora=dados.registros;
