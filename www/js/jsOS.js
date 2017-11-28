@@ -1,5 +1,4 @@
-function goBuscaRazao(){
-	//document.getElementById('divResultado').style.display='none';
+function goBuscaRazao(){//document.getElementById('divResultado').style.display='none';
 	var nome=document.getElementById('tParm').value;
 	url='http://mensagemvirtual.com.br/foraEmpsOS.html';
 	url="http://localhost:8080/geosmarty/ajax/chooseRazao.jsonx?parm="+nome;
@@ -61,7 +60,8 @@ function getOeses(){
 }
 function listaOesses(dados){
 	var fantasia=window.localStorage.getItem('fantasia');
-	document.getElementById('spanRazao').innerHTML=fantasia;
+	var codEmpresa=window.localStorage.getItem('idEmpresa');
+	document.getElementById('spanRazao').innerHTML='<a href="javascript:abreEmpresa('+codEmpresa+');" class="z">'+fantasia+'</a>';
 	var os=dados.registros;
 	window.localStorage.setItem('oesses',JSON.stringify(os));
 	var n=os.length;
@@ -164,9 +164,11 @@ function getEqCorrente(){
 }
 function complementaEq(){
 	var eq=getEqCorrente();
-	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasse';
+	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasseWS';
     var funcao='funcao';
-    var parms='&nomeTabela=GtEquipamentos&id='+eq.id+'&atributo=gtFabricante';
+    var parms="&login="+window.localStorage.getItem('userLogin');
+    parms+="&senha="+window.localStorage.getItem('senha');
+    parms+='&nomeTabela=GtEquipamentos&id='+eq.id+'&atributo=gtFabricante';
     putMemo('retornoAx', 'retornoGotFab');
     chamaJSon(negocio,funcao,parms);
 }
@@ -209,9 +211,11 @@ function iterateEqTipos(){
 }
 function getTipoEq(){
 	var eq=getEqCorrente();
-	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasse';
+	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasseWS';
     var funcao='funcao';
-    var parms='&nomeTabela=GtEquipamentos&id='+eq.id+'&atributo=gtTipoEquipamento';
+    var parms="&login="+window.localStorage.getItem('userLogin');
+    parms+="&senha="+window.localStorage.getItem('senha');
+    parms+='&nomeTabela=GtEquipamentos&id='+eq.id+'&atributo=gtTipoEquipamento';
     putMemo('retornoAx', 'retornoGotTipo');
     chamaJSon(negocio,funcao,parms);
 }
@@ -254,9 +258,11 @@ function iterateEqLocal(){
 }
 function getLocalEq(){ 
 	var eq=getEqCorrente();
-	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasse';
+	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasseWS';
     var funcao='funcao';
-    var parms='&nomeTabela=GtEquipamentos&id='+eq.id+'&atributo=gtEquipamentoLocalizacao';
+    var parms="&login="+window.localStorage.getItem('userLogin');
+    parms+="&senha="+window.localStorage.getItem('senha');
+    parms+='&nomeTabela=GtEquipamentos&id='+eq.id+'&atributo=gtEquipamentoLocalizacao';
     putMemo('encoda',true);
     putMemo('retornoAx', 'retornoGotLocal');
     chamaJSon(negocio,funcao,parms);
@@ -362,12 +368,6 @@ function trazEquipos(){
 	parte+='</tr>';
 	parte+='</table>';
 	document.getElementById('spanEquipos').innerHTML=parte;
-/*
-	var descricao=eqs[0].descricao;
-	document.getElementById('spEqDesc').innerHTML=descricao;
-	var descricao2=eqs[1].descricao;
-	document.getElementById('spEqDesc1').innerHTML=descricao2;
-*/	
 }
 function listaEquipamentos(dados){
 	var impressora=dados.registros;
@@ -378,4 +378,8 @@ function listaEquipamentos(dados){
 		var modelo=impressora[i].modelo;
 		var numeroSerie=impressora[i].numeroSerie;
 	}
+}
+function abreEmpresa(codigo){
+	window.localStorage.setItem('idEmpresa',codigo);
+	window.open('dadosEmpresa.html','_top');
 }
