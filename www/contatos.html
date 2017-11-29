@@ -1,1 +1,53 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=10, minimum-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/geral.css">
+    <script type="text/javascript" src="js/urlen.js"></script>
+    <script type="text/javascript" src="js/jsPesqEmpresas.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<title>PrintSource - Clientes</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="http://printsource.jelasticlw.com.br">
+</head>
+<body onload="carregouContatos();">
+<div class="menu1" id='m1' style="position:fixed;top:0;width: 100%;z-index: 2020;">
+    <ul>
+        <li><a class="menu1one" href="index.html">Home</a></li>
+    </ul> 
+
+    <ul>
+        <li style="z-index: 7070;"><a class="menu1two"
+            href="javascript:k=1;">Clientes <!--[if gte IE 7]><!--></a>
+            <!--<![endif]-->
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li><a href="listaEmpresas.html">Nova Pesquisa</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> <!--[if lte IE 6]></a><![endif]--></li>
+    </ul>
+</div>
+<br>
+<br>
+<center>
+    <img src="img/logo_printsource.png">
+</center>
+
+<center><b>Empresa</b></span> <span id="tRazao"></span></center>
+<br>
+<span id="spanContatos"></span>
+<span id="spanHid"></span>
+</body>
+</html>
