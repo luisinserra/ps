@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<htmll ng-app ng-csp>
 <html>
 
 <head>
@@ -7,11 +8,12 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-    <title>PrintSource</title> 
+    <title>PrintSource - Clientes</title> 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/geral.css">
-    <script type="text/javascript" src="js/jsMenu.js"></script>
+    <script type="text/javascript" src="js/urlen.js"></script>
+    <script type="text/javascript" src="js/jsClientes.js"></script>
 </head>
 
 <body>
@@ -30,7 +32,6 @@
                         <td>
                             <ul>
                                 <li><a href="OS.html">OS</a></li>
-                                <li><a href="Clientes.html">Clientes</a></li>
                                 <li><a href="checkin.html">Checkin</a></li>
                             </ul>
                         </td>
@@ -43,6 +44,25 @@
 <center>
     <img src="img/logo_printsource.png">
 </center>
+
+<div class="container">
+    <div class="cantonado">
+        <div class="row">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <span style="float: right;"><b>Razão Social</b></span>
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <input type="text" id="tParm" size="10" maxlength="40">
+                <br>
+                <br>
+                <span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" onclick="goBuscaRazao();">Pesquisar</span>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+<span id="spanSaida"></span>
 <br>
 <br>
 
