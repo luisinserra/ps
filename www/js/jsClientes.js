@@ -133,8 +133,75 @@ function getContatosEmpresa(){
 }
 function gotContatosEmpresa(dados){
 	var contatos=dados.registros;
+	putMemo('nContatos',contatos.length);
 	var xContatos=JSON.stringify(contatos);
 	window.localStorage.setItem('xContatos',xContatos);
+	var n=dados.registros.length;
+	if (n > 0){
+		putMemo('conta',0);
+		iterateContatos();
+	}
+}
+function iterateContatos(){
+	var k=getMemo('conta');
+	k=parseInt(k,10);
+	var n=getMemo('nContatos');
+	n=parseInt(n,10);
+	if (k < n){
+		getTelefones();
+	} else {
+		finalizaContatos();
+	}
+}
+function getTelefones(){
+	var conta=getMemo('conta');
+	conta=""+conta;
+	var contato=conta.getKContato();
+	var negocio='http://localhost:8080/geosmarty/getFonesContato';
+	var funcao='';
+    var parms="&login="+window.localStorage.getItem('userLogin');
+    parms+="&senha="+window.localStorage.getItem('senha');
+    parms+="&codContato="+contato.id;
+    putMemo('encoda',true);
+    putMemo('retornoAx', 'gotTelefones');
+    chamaJSon(negocio,funcao,parms);
+}
+function gotTelefones(dados){
+	var fones=dados.registros;
+	var xFones='';
+	var n=fones.length;
+	for (var i = 0; i < fones.length; i++) {
+		var fone=fones[i];
+		if (xFones != ''){
+			xFones+='<br>';
+		}
+		var linha=fone.tipo+' ('+fone.ddd+') '+fone.fone+' '+fone.obs;
+		xFones+=linha;
+	}
+	var conta=getMemo('conta');
+	conta=""+conta;
+	var contato=conta.getKContato();
+	contato.fones=xFones;
+	var xContatos=window.localStorage.getItem('xContatos');
+	var contatos=JSON.parse(xContatos);
+	var k=getMemo('conta');
+	k=parseInt(k,10);
+	contatos[k]=contato;
+	xContatos=JSON.stringify(contatos);
+	window.localStorage.setItem('xContatos',xContatos);
+	k++;
+	putMemo('conta',k);
+	iterateContatos();
+}
+String.prototype.getKContato = function(){
+	var n=this;
+	var xContatos=window.localStorage.getItem('xContatos');
+	var contatos=JSON.parse(xContatos);
+	return contatos[n];
+}
+function finalizaContatos(){
+	var xContatos=window.localStorage.getItem('xContatos');
+	var contatos=JSON.parse(xContatos);
 }
 
 function trazEquipos(){
