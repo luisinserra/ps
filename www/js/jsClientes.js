@@ -65,13 +65,33 @@ function exibeCliente(dados){
 	var empresa=getJson(dados);
 	var xEmpresa=JSON.stringify(empresa);
 	window.localStorage.setItem('xEmpresa',xEmpresa);
+	var negocio='http://localhost:8080/geosmarty/getEnderecoPrincipal';
+	var funcao='';
+    var parms="&login="+window.localStorage.getItem('userLogin');
+    parms+="&senha="+window.localStorage.getItem('senha');
+    parms+="&codEmpresa="+empresa.id;
+    putMemo('encoda',true);
+    putMemo('retornoAx', 'pegaEnderecoPrincipal');
+    chamaJSon(negocio,funcao,parms);
+}
+function pegaEnderecoPrincipal(dados){
+	var xEmpresa=window.localStorage.getItem('xEmpresa');
+	var empresa=JSON.parse(xEmpresa);
+	var ender=dados.registros[0];
 	var razao=empresa.razaoSocial;
+	empresa.endTipoLogradouro=ender.tipoLogradouro;
+	empresa.endLogradouro=ender.logradouro;
+	empresa.endNumero=ender.numero;
+	empresa.endComplemento=ender.complemento;
+	empresa.endCidade=ender.cidade;
+	empresa.endEstado=ender.estado;
+	empresa.endComplemento=ender.complemento;
 	document.getElementById('spanRazao').innerHTML=razao;
 	document.getElementById('spanDDD').innerHTML=empresa.dddPABX;
 	document.getElementById('spanFone').innerHTML=empresa.pabx;
 	var endereco=empresa.endTipoLogradouro+' '+empresa.endLogradouro+', '+empresa.endNumero;
 	var complemento='';
-	if (empresa.endComplemento != ''){
+	if (empresa.endComplemento != '' && empresa.endComplemento != 'null'){
 		complemento=' - '+empresa.endComplemento;
 	}
 	endereco+=complemento;
@@ -95,215 +115,26 @@ function exibeCliente(dados){
 	}
 	document.getElementById('spanCargo').innerHTML=cargo;
 	document.getElementById('spanDepto').innerHTML=depto;
-}
-function getOs(codigo){
-	window.localStorage.setItem('idOS',codigo);
-	window.open('OS3.html','_top');
-}
-function trazOs(){
-	var fantasia=window.localStorage.getItem('fantasia');
-	document.getElementById('spanRazao').innerHTML=fantasia;
-	var oesses=window.localStorage.getItem('oesses');
-	oesses=JSON.parse(oesses);
-	var idOS=window.localStorage.getItem('idOS');
-	for (var i = oesses.length - 1; i >= 0; i--) {
-		var id=oesses[i].id;
-		if (id == idOS){
-			var jsos=JSON.stringify(oesses[i]);
-			window.localStorage.setItem('os',jsos);
-		}
-	}
-	putDadosOS();
-}
-function putDadosOS(){
-	var js=window.localStorage.getItem('os');
-	var os=JSON.parse(js);
-	if (os.obs == 'null'){
-		os.obs='';
-	}
-	document.getElementById('spNos').innerHTML='No. '+os.numero;
-	document.getElementById('spData').innerHTML=os.data;
-	document.getElementById('spStat').innerHTML=os.status;
-	document.getElementById('spMotivo').innerHTML=os.motivo;
-	document.getElementById('spPrazo').innerHTML=os.prazoAtendimento;
-	document.getElementById('spDefeito').innerHTML=os.causaDefeito;
-	document.getElementById('spObs').innerHTML=os.obs;
-	document.getElementById('spanSaida').style.display='block';
-	getEquiposOrdem();
-}
 
-function getEquiposOrdem()
-{
-	var oesses=window.localStorage.getItem('oesses');
-	oesses=JSON.parse(oesses);
-	var idOS=window.localStorage.getItem('idOS');
-	var negocio='http://clevermidia.com.br/printsource/equipamentosOrdem';
+	getContatosEmpresa();
+}
+function getContatosEmpresa(){
+	var xEmpresa=window.localStorage.getItem('xEmpresa');
+	var empresa=JSON.parse(xEmpresa);
+	var codigo=empresa.id;
+	var negocio='http://localhost:8080/geosmarty/getContatosDaEmpresa';
 	var funcao='';
-	putMemo('encoda',true);
     var parms="&login="+window.localStorage.getItem('userLogin');
     parms+="&senha="+window.localStorage.getItem('senha');
-    parms+="&idOrdem="+idOS;
-    putMemo('retornoAx', 'gotListaEquipos');
-    chamaJSon(negocio,funcao,parms);
-}
-function gotListaEquipos(dados){
-	var eqs=dados.registros;
-	window.localStorage.setItem('equipos',JSON.stringify(eqs));
-	completaEquipamentos();
-}
-function completaEquipamentos(){
-	putMemo('conta',0);
-	iterateEquipos();
-}
-function iterateEquipos(){
-	var eqs=window.localStorage.getItem('equipos');
-	eqs=JSON.parse(eqs);
-	var k=getMemo('conta');
-	k=parseInt(k,10);
-	if (k < eqs.length){
-		complementaEq();
-	} else {
-		finalisouFab();
-	}
-}
-function getEqCorrente(){
-	var eqs=window.localStorage.getItem('equipos');
-	eqs=JSON.parse(eqs);
-	var k=getMemo('conta');
-	k=parseInt(k,10);
-	var equipamento=eqs[k];
-	return equipamento;
-}
-function complementaEq(){
-	var eq=getEqCorrente();
-	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasseWS';
-    var funcao='funcao';
-    var parms="&login="+window.localStorage.getItem('userLogin');
-    parms+="&senha="+window.localStorage.getItem('senha');
-    parms+='&nomeTabela=GtEquipamentos&id='+eq.id+'&atributo=gtFabricante';
-    putMemo('retornoAx', 'retornoGotFab');
-    chamaJSon(negocio,funcao,parms);
-}
-function retornoGotFab(dados){
-	var fab=dados.registros[0];
-	console.log("Fabricante: "+fab.nome);
-	var eqs=window.localStorage.getItem('equipos');
-	eqs=JSON.parse(eqs);
-	var k=getMemo('conta');
-	k=parseInt(k,10);
-	eqs[k].fabricante=fab.nome;
-	window.localStorage.setItem('equipos',JSON.stringify(eqs));
-	nexEquipo();
-}
-function nexEquipo(){
-	var k=getMemo('conta');
-	k=parseInt(k,10);
-	k++;
-	putMemo('conta',k);
-	iterateEquipos();
-}
-function finalisouFab(){
-	console.log("Fabricantes colocados");
-	completaEqTipo();
-}
-function completaEqTipo(){
-	putMemo('conta',0);
-	iterateEqTipos();
-}
-function iterateEqTipos(){
-	var eqs=window.localStorage.getItem('equipos');
-	eqs=JSON.parse(eqs);
-	var k=getMemo('conta');
-	k=parseInt(k,10);
-	if (k < eqs.length){
-		getTipoEq();
-	} else {
-		finalizouTipos();
-	}
-}
-function getTipoEq(){
-	var eq=getEqCorrente();
-	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasseWS';
-    var funcao='funcao';
-    var parms="&login="+window.localStorage.getItem('userLogin');
-    parms+="&senha="+window.localStorage.getItem('senha');
-    parms+='&nomeTabela=GtEquipamentos&id='+eq.id+'&atributo=gtTipoEquipamento';
-    putMemo('retornoAx', 'retornoGotTipo');
-    chamaJSon(negocio,funcao,parms);
-}
-function retornoGotTipo(dados){
-	var tipo=dados.registros[0];
-	console.log("Tipo: "+tipo.nome);
-	var eqs=window.localStorage.getItem('equipos');
-	eqs=JSON.parse(eqs);
-	var k=getMemo('conta');
-	k=parseInt(k,10);
-	eqs[k].tipo=tipo.nome;
-	window.localStorage.setItem('equipos',JSON.stringify(eqs));
-	nexEqTipo();
-}
-function nexEqTipo(){
-	var k=getMemo('conta');
-	k=parseInt(k,10);
-	k++;
-	putMemo('conta',k);
-	iterateEqTipos();
-}
-function finalizouTipos(){
-	console.log("Tipos Finalizados");
-	completaEqLocal();
-}
-function completaEqLocal(){
-	putMemo('conta',0);
-	iterateEqLocal();
-}
-function iterateEqLocal(){
-	var eqs=window.localStorage.getItem('equipos');
-	eqs=JSON.parse(eqs);
-	var k=getMemo('conta');
-	k=parseInt(k,10);
-	if (k < eqs.length){
-		getLocalEq();
-	} else {
-		finalizouLocais();
-	}
-}
-function getLocalEq(){ 
-	var eq=getEqCorrente();
-	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasseWS';
-    var funcao='funcao';
-    var parms="&login="+window.localStorage.getItem('userLogin');
-    parms+="&senha="+window.localStorage.getItem('senha');
-    parms+='&nomeTabela=GtEquipamentos&id='+eq.id+'&atributo=gtEquipamentoLocalizacao';
+    parms+="&codEmpresa="+empresa.id;
     putMemo('encoda',true);
-    putMemo('retornoAx', 'retornoGotLocal');
+    putMemo('retornoAx', 'gotContatosEmpresa');
     chamaJSon(negocio,funcao,parms);
 }
-function retornoGotLocal(dados){
-	var local=dados.registros[0];
-	console.log("Local: "+local.departamento);
-	var eqs=window.localStorage.getItem('equipos');
-	eqs=JSON.parse(eqs);
-	var k=getMemo('conta');
-	k=parseInt(k,10);
-	eqs[k].localizacao=local.departamento;
-	window.localStorage.setItem('equipos',JSON.stringify(eqs));
-	nexEqLocal();
-}
-function nexEqLocal(){
-	var k=getMemo('conta');
-	k=parseInt(k,10);
-	k++;
-	putMemo('conta',k);
-	iterateEqLocal();
-}
-function finalizouLocais(){
-	console.log("Locais finalizados");
-	abreFrameEqs();
-}
-function abreFrameEqs(){
-	document.getElementById('ifraEqs').style.display='block';
-	document.getElementById('ifraEqs').src='OS4.html';
+function gotContatosEmpresa(dados){
+	var contatos=dados.registros;
+	var xContatos=JSON.stringify(contatos);
+	window.localStorage.setItem('xContatos',xContatos);
 }
 
 function trazEquipos(){
