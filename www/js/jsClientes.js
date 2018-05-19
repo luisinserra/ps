@@ -200,8 +200,81 @@ String.prototype.getKContato = function(){
 	return contatos[n];
 }
 function finalizaContatos(){
+	document.getElementById('ifraContatos').style.display='block';
+	document.getElementById('ifraContatos').src='ClientesContatos.html';
+}
+function mostraContatos(){
 	var xContatos=window.localStorage.getItem('xContatos');
 	var contatos=JSON.parse(xContatos);
+	var lenTab=555*(contatos.length);
+	var parte='<table style="margin-left: 40px;">';
+	parte+='<tr>';
+	for (var i = 0; i < contatos.length; i++) {
+		var contato=contatos[i];
+		var apelido=contato.apelido;
+		var cargo=contato.cargo;
+		var depto=contato.depto;
+		var email=contato.email;
+		var fones=contato.fones;
+		var nome=contato.nome;
+		parte+='<td>';
+		parte+='<table style="width: 555px; margin-left: 40px;">';
+		parte+='<tr>';
+		parte+='<td>';
+		parte+='<B>Nome</B>';
+		parte+='</td>';
+		parte+='<td style="width: 400px;">';
+		parte+=nome;
+		parte+='</td>';
+		parte+='</tr>';
+		parte+='<tr>';
+		parte+='<td>';
+		parte+='<B>Apelido</B>';
+		parte+='</td>';
+		parte+='<td style="width: 400px;">';
+		parte+=apelido;
+		parte+='</td>';
+		parte+='</tr>';
+		parte+='<tr>';
+		parte+='<td>';
+		parte+='<B>Depto</B>';
+		parte+='</td>';
+		parte+='<td style="width: 400px;">';
+		parte+=depto;
+		parte+='</td>';
+		parte+='</tr>';
+		parte+='<tr>';
+		parte+='<td>';
+		parte+='<B>Cargo</B>';
+		parte+='</td>';
+		parte+='<td style="width: 400px;">';
+		parte+=cargo;
+		parte+='</td>';
+		parte+='</tr>';
+		parte+='<tr>';
+		parte+='<td>';
+		parte+='<B>Email</B>';
+		parte+='</td>';
+		parte+='<td style="width: 400px;">';
+		parte+=email;
+		parte+='</td>';
+		parte+='</tr>';
+		parte+='<tr>';
+		parte+='<td>';
+		parte+='<B>Telefone</B>';
+		parte+='</td>';
+		parte+='<td style="width: 400px;">';
+		parte+=fones;
+		parte+='</td>';
+		parte+='</tr>';
+		parte+='</table>';
+		parte+='<td width="80">';
+		parte+='&nbsp;';
+		parte+='</td>';
+	}
+	parte+='</tr>';
+	parte+='</table>';
+	document.getElementById('spanContatos').innerHTML=parte;
 }
 
 function trazEquipos(){
