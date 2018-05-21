@@ -43,3 +43,33 @@ function displayMenu(){
     document.getElementById('spanLin1').classList.add('cantinhos');
     document.getElementById('spanLin2').classList.add('cantinhos');
 }
+function mataLogin(){
+	db = window.openDatabase("DbPrintSource", "1.0", "DbPrintSource", 10);
+	db.transaction(apagaRegistroExistente, erroOpen, apagaSucesso);
+}
+function apagaRegistroExistente(tx){
+/*
+	tx.executeSql('DELETE FROM login', [], function(_, result) {
+  	(erroApaga || $.noop)(result);});
+*/
+
+		//tx.executeSql('CREATE TABLE IF NOT EXISTS login (id integer primary key, login text, senha text, nivel integer)');
+		tx.executeSql('DELETE FROM login Where id=4');
+
+		//tx.executeSql('SELECT * FROM login', [], apagaSucesso, erroApaga);
+
+/*
+	try {
+		tx.executeSql('DELETE FROM login', erroApaga);
+	} catch (e){
+		console.log(e.message)
+	}
+	apagaSucesso('','');
+*/	
+}
+function erroApaga(erro){
+	alert("Erro apagando login..."+erro.code+":"+erro.message);
+}
+function apagaSucesso(){
+	window.open('index.html');
+}
