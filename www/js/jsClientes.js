@@ -90,6 +90,9 @@ function pegaEnderecoPrincipal(dados){
 	document.getElementById('spanDDD').innerHTML=empresa.dddPABX;
 	document.getElementById('spanFone').innerHTML=empresa.pabx;
 	var endereco=empresa.endTipoLogradouro+' '+empresa.endLogradouro+', '+empresa.endNumero;
+	if (endereco == 'null null, null'){
+		endereco='';
+	}
 	var complemento='';
 	if (empresa.endComplemento != '' && empresa.endComplemento != 'null'){
 		complemento=' - '+empresa.endComplemento;

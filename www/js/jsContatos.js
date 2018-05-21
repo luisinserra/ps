@@ -10,22 +10,49 @@ function goBuscaContato(){
     chamaJSon(negocio,funcao,parms);
 }
 function trouxeContatos(dados){
-	document.getElementById('spanSaida').innerHTML='';
 	var contatos=dados.registros;
 	putMemo('contatos',contatos);
+	var n=dados.registros.length;
+	putMemo('nContatos',n);
+	if (n > 0){
+		putMemo('conta',0);
+		iterateContatos();
+	}
+}
+function iterateContatos(){
+	var k=getMemo('conta');
+	k=parseInt(k,10);
+	var n=getMemo('nContatos');
+	n=parseInt(n,10);
+	if (k < n){
+		putMemo('gotPraLista',1);
+		var codigo=getMemo('contatos')[k].id;
+		window.localStorage.setItem('idContato',codigo);
+		getEmpresa();
+	} else {
+		displayContatos();
+	}
+}
+function displayContatos(){
+	document.getElementById('spanSaida').innerHTML='';
+	var contatos=getMemo('contatos');
 	var n=contatos.length;
 	var tInicial=240;
 	for (var i = 0; i < n; i++){
 		var contato=contatos[i];
 		var codigo=contato.id;
         var nome=contato.nome;
+        var empresa=contato.empresa;
+        if (empresa.length > 6){
+        	empresa=empresa.substring(0,6)+'...';
+        }
+        nome+='-'+empresa;
         var top=tInicial+(i*50);
         var parte='<span id="spanLin'+i+'" style="padding: 10px;position:absolute;width:350px;height:50px;top:'+top+'px;left:0px;right:0px;margin:auto;"><a href="javascript:getContato('+codigo+');" class="z" style="font-size: 25px;">'+nome+'</a></span><br><br>';
         document.getElementById('spanSaida').innerHTML+=parte;
         var elemento=document.getElementById('spanLin'+i);
         elemento.classList.add('cantinhos');
 	}
-
 }
 function getContato(codigo){
 	window.localStorage.setItem('idContato',codigo);
@@ -81,11 +108,29 @@ function getEmpresa(){
     parms+="&id="+window.localStorage.getItem('idContato');
     parms+="&atributo=gtEmpresa";
     putMemo('encoda',true);
-    putMemo('retornoAx', 'gotEmpresa');
+    var retorno='gotEmpresa';
+    if (ckTem('gotPraLista')){
+    	retorno='putEmpresaLista';
+    	delMemo('gotPraLista');
+    }
+    putMemo('retornoAx', retorno);
     chamaJSon(negocio,funcao,parms);
 }
 function gotEmpresa(dados){
 	var empresa = dados.registros[0];
 	window.localStorage.setItem('idEmpresa',empresa.id);
 	location.href="ClienteShow.html";
+}
+function putEmpresaLista(dados){
+	var empresa = dados.registros[0];
+	var k=getMemo('conta');
+	var contatos=getMemo('contatos');
+	var contato=contatos[k];
+	contato.empresa=empresa.fantasia;
+	contatos[k]=contato;
+	putMemo('contatos',contatos);
+	k=parseInt(k,10);
+	k++;
+	putMemo('conta',k);
+	iterateContatos();
 }
