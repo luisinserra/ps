@@ -1,6 +1,6 @@
 function goBuscaContato(){
 	var parm=document.getElementById('tParm').value;
-	var negocio='http://localhost:8080/geosmarty/chooseApelido';
+	var negocio='http://clevermidia.com.br/printsource/chooseApelido';
 	var funcao='';
     var parms="&login="+window.localStorage.getItem('userLogin');
     parms+="&senha="+window.localStorage.getItem('senha');
@@ -72,7 +72,7 @@ function getTelefones(){
 	var conta=getMemo('conta');
 	conta=""+conta;
 	var contato=conta.getKContato();
-	var negocio='http://localhost:8080/geosmarty/getFonesContato';
+	var negocio='http://clevermidia.com.br/printsource/getFonesContato';
 	var funcao='';
     var parms="&login="+window.localStorage.getItem('userLogin');
     parms+="&senha="+window.localStorage.getItem('senha');
@@ -100,7 +100,7 @@ function gotTelefones(dados){
 	window.localStorage.setItem('xContato',xContato);
 }
 function getEmpresa(){
-	var negocio='http://localhost:8080/geosmarty/ajax/getAtributoDeClasseWS';
+	var negocio='http://clevermidia.com.br/printsource/ajax/getAtributoDeClasseWS';
 	var funcao='';
     var parms="&login="+window.localStorage.getItem('userLogin');
     parms+="&senha="+window.localStorage.getItem('senha');

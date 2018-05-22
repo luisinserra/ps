@@ -65,7 +65,7 @@ function exibeCliente(dados){
 	var empresa=getJson(dados);
 	var xEmpresa=JSON.stringify(empresa);
 	window.localStorage.setItem('xEmpresa',xEmpresa);
-	var negocio='http://localhost:8080/geosmarty/getEnderecoPrincipal';
+	var negocio='http://clevermidia.com.br/printsource/getEnderecoPrincipal';
 	var funcao='';
     var parms="&login="+window.localStorage.getItem('userLogin');
     parms+="&senha="+window.localStorage.getItem('senha');
@@ -125,7 +125,7 @@ function getContatosEmpresa(){
 	var xEmpresa=window.localStorage.getItem('xEmpresa');
 	var empresa=JSON.parse(xEmpresa);
 	var codigo=empresa.id;
-	var negocio='http://localhost:8080/geosmarty/getContatosDaEmpresa';
+	var negocio='http://clevermidia.com.br/printsource/getContatosDaEmpresa';
 	var funcao='';
     var parms="&login="+window.localStorage.getItem('userLogin');
     parms+="&senha="+window.localStorage.getItem('senha');
@@ -160,7 +160,7 @@ function getTelefones(){
 	var conta=getMemo('conta');
 	conta=""+conta;
 	var contato=conta.getKContato();
-	var negocio='http://localhost:8080/geosmarty/getFonesContato';
+	var negocio='http://clevermidia.com.br/printsource/getFonesContato';
 	var funcao='';
     var parms="&login="+window.localStorage.getItem('userLogin');
     parms+="&senha="+window.localStorage.getItem('senha');
