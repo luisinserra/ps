@@ -72,28 +72,33 @@
 
                 <div id="idScopo2" ng-app="exibeApk" ng-controller="displayCtrl">
                     <div class="row" style="width: 800px">
-                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                        <div class="hidden-xs hidden-sm col-md-5 col-lg-5">
                             Nome
                         </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <div class="hidden-xs hidden-sm col-md-3 col-lg-3">
                             Cidade
                         </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <div class="hidden-xs hidden-sm col-md-3 col-lg-3">
                             País
                         </div>
                     </div>
 
                     <div class="row" ng-repeat="pessoa in pessoas" style="width: 800px;">
-                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                        <div class="hidden-md hidden-lg col-xs-1 col-sm-1"><span style="float: right;"><b>Nome</b></span></div>
+                        <div class="col-xs-11 col-sm-11 col-md-5 col-lg-5">
                             {{ pessoa.Name }}
                         </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
+                        <div class="hidden-md hidden-lg col-xs-1 col-sm-1"><span style="float: right;"><b>Cidade</b></span></div>
+                        <div class="col-xs-11 col-sm-11 col-md-3 col-lg-3">
                             {{ pessoa.City }}
                         </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
+                        <div class="hidden-md hidden-lg col-xs-1 col-sm-1"><span style="float: right;"><b>País</b></span></div>
+                        <div class="col-xs-11 col-sm-11 col-md-3 col-lg-3">
                             {{ pessoa.Country }}
                         </div>
-                        
+                        <div class="hidden-md hidden-lg col-xs-12 col-sm-12"><hr></div>
                     </div>
                 </div>
     
