@@ -1,4 +1,6 @@
+var apkDisplay = angular.module('exibeApk', []);
 var apkCliente = angular.module('clienteApk', []);
+var containerApp = angular.module('myApp',['clienteApk', 'exibeApk'])
 apkCliente.service('servico', function(){
 	this.fnServico=function(parm,$scope){
 		console.log('Serviço recebeu '+parm);
@@ -38,6 +40,8 @@ apkCliente.service('servico', function(){
 apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval){
 	console.log("Controller trabalhando");
 	$scope.bc=goBuscaCliente;
+	$scope.callDisplay=toDisplay;
+	$scope.ide='um';
 
 	var resposta=servico.carregaClientes('kk',$http, $scope);
 	var n=0;
@@ -51,6 +55,8 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
               console.log($scope.retorno);
               servico.displayInfo($scope);
               $interval.cancel($scope.intervalPromise);
+              putMemo('pessoas',$scope.retorno);
+              $scope.callDisplay();
           }
           conta++;
       }, 100);
@@ -68,7 +74,12 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
 	        {
 	              console.log($scope.retorno);
 	              $interval.cancel($scope.intervalPromise);
-	        }
+	              putMemo('pessoas',$scope.retorno);
+	              $scope.callDisplay();
+/*	              try {
+	              	$scope.$apply();
+	              } catch(e){}
+*/	        }
 	        conta++;
     	}, 100);
     	return $scope.retorno;
@@ -96,3 +107,26 @@ function vaiNome2(parm){
 	co.nome=parm;
 	co.$apply();
 }
+
+
+function toDisplay(){
+	var pessoas=getMemo('pessoas');
+	console.log('vou mostrar pessoas...');
+	console.log(pessoas);
+	var scopo2=angular.element(document.getElementById('idScopo2'));
+	var sc=scopo2.scope();
+	sc.pessoas=pessoas;
+	//sc.$apply();
+}
+
+
+apkDisplay.service('servicoDisplay', function(){
+	this.popula=function($scope){
+		$scope.pessoas=getMemo('pessoas');
+	}
+});
+apkDisplay.controller('displayCtrl', function($scope, servicoDisplay){
+	console.log('disp');
+	$scope.callDisplay=toDisplay;
+	$scope.ide='dois';
+});
