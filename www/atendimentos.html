@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/geral.css">
     <script type="text/javascript" src="js/urlen.js"></script>
-    <script type="text/javascript" src="http://code.angularjs.org/1.0.1/angular-1.0.1.min.js"></script>
+    <script type="text/javascript" src="http://code.angularjs.org/1.7.0/angular.min.js"></script>
     <script type="text/javascript" src="js/jsAtendimentos.js"></script>
 </head>
 
@@ -58,7 +58,34 @@
                     <input type="text" id="tParm" size="10" maxlength="40" ng-model="nome">
                     <br>
                     <br>
-                    <span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" ng-click="trazListaClientes();">Pesquisar</span>
+                    <span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" ng-click="reLeitura();">Pesquisar</span>
+
+
+                    <br>
+                    <div class="row" style="width: 800px">
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                            Nome
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            Cidade
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            País
+                        </div>
+                    </div>
+
+                    <div class="row" ng-repeat="pessoa in pessoas" style="width: 800px;">
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                            {{ pessoa.Name }}
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            {{ pessoa.City }}
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            {{ pessoa.Country }}
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>
