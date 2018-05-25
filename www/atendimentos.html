@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/geral.css">
     <script type="text/javascript" src="js/urlen.js"></script>
     <script type="text/javascript" src="http://code.angularjs.org/1.7.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.7.0/i18n/angular-locale_pt-br.js"></script>
     <script type="text/javascript" src="js/jsAtendimentos.js"></script>
 </head>
 
@@ -73,15 +74,17 @@
                 <div id="idScopo2" ng-app="exibeApk" ng-controller="displayCtrl">
                     <div class="row" style="width: 800px">
                         <div class="hidden-xs hidden-sm col-md-5 col-lg-5">
-                            Nome
+                            <b>Nome</b>
                         </div>
                         <div class="hidden-xs hidden-sm col-md-3 col-lg-3">
-                            Cidade
+                            <b>Cidade</b>
                         </div>
                         <div class="hidden-xs hidden-sm col-md-3 col-lg-3">
-                            País
+                            <b>País</b>
                         </div>
                     </div>
+                    Valor: {{ valor | currency }}, {{ ide }}, {{ data | date }}
+        <br>
 
                     <div class="row" ng-repeat="pessoa in pessoas" style="width: 800px;">
                         <div class="hidden-md hidden-lg col-xs-1 col-sm-1"><span style="float: right;"><b>Nome</b></span></div>
@@ -101,6 +104,8 @@
                         <div class="hidden-md hidden-lg col-xs-12 col-sm-12"><hr></div>
                     </div>
                 </div>
+
+        <br>
     
     </div>
 </div>

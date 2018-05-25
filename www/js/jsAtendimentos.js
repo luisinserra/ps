@@ -64,25 +64,7 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
 	$scope.bc=goBuscaCliente;
 	$scope.callDisplay=toDisplay;
 	$scope.ide='um';
-
-	var resposta=servico.carregaClientes('kk',$http, $scope);
-	var n=0;
-	var conta=0;
-	$scope.intervalPromise = $interval(function(){
-		try {
-			n=$scope.retorno.length;
-		} catch(e){}
-          if (n > 0 || conta > 20)
-          {
-              console.log($scope.retorno);
-              servico.displayInfo($scope);
-              $interval.cancel($scope.intervalPromise);
-              putMemo('pessoas',$scope.retorno);
-              $scope.callDisplay();
-          }
-          conta++;
-      }, 100);
-
+	$scope.valor='200';
 
 	$scope.reLeitura=function(){
 		var resposta=servico.carregaClientes('kk',$http, $scope);
@@ -125,6 +107,8 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
     	}, 100);
     	return $scope.retorno;
 	}
+
+	$scope.reLeitura();
 });
 function goBuscaCliente(){
 	console.log("Buscar Cliente");
@@ -170,4 +154,6 @@ apkDisplay.controller('displayCtrl', function($scope, servicoDisplay){
 	console.log('disp');
 	$scope.callDisplay=toDisplay;
 	$scope.ide='dois';
+	$scope.valor='13100.50';
+	$scope.data=new Date();
 });
