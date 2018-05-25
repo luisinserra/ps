@@ -46,6 +46,8 @@ apkCliente.service('servico', function(){
 		var promise=$http.get(urle)
 		.then(function (response){
 			retorno=response.data;
+			retorno.erro='';
+			retorno.codigo='200';
 			$scope.retorno=retorno;
 			console.log("retornou dados");
 			console.log(retorno);
@@ -113,10 +115,8 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
 			try {
 				n=$scope.retorno.mais.length;
 			} catch(e){}
-			console.log('n:'+n+',conta:'+conta);
 	        if (n > 0 || conta > 50)
 	        {
-	        	console.log("fechando...");
 	              console.log($scope.retorno);
 	              $interval.cancel($scope.intervalPromise);
 	              putMemo('atendimentos',$scope.retorno);
