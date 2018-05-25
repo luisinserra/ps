@@ -883,7 +883,15 @@ function trataChamaJSon()
 		}
 		var funcaoRetorno=getMemo('retornoAx');
 		cmd=funcaoRetorno+'(dados);';
-		eval(cmd);
+		putMemo('dados',dados);
+		if (!ckTem('desvio')){
+			eval(cmd);
+		} else {
+			cmd=getMemo('desvio')+'()';
+			delMemo('desvio');
+			exibir();
+			//eval(cmd);
+		}
 	}
 }
 function insertOptionBefore(idJanela,codigo,valor)
@@ -2472,4 +2480,16 @@ function getCombo(lista,nomeId,nomeNome,nomeCombo,selecionado,valorBlank){
 	}
 	parte+='</select>';
 	return parte;
+}
+function getJsonByCampo(json,campo,valor){
+	var retorno="";
+	for (var i = 0; i < json.length; i++) {
+		var reg=json[i];
+		var cmd='resultado=reg.'+campo+';';
+		eval(cmd);
+		if (resultado == valor){
+			return json[i];
+		}
+	}
+	return retorno;
 }
