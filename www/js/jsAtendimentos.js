@@ -35,6 +35,26 @@ apkCliente.service('servico', function(){
 		}
 		$scope.pessoas=$scope.retorno;
 	}
+
+	this.carregaAtendimentos=function(parm, indice, $http, $scope){
+		var retorno={};
+		var conta=0;
+		var login=window.localStorage.getItem('userLogin');
+    	var senha=window.localStorage.getItem('senha');
+    	var urle="http://localhost:8080/geosmarty/getAtendimentosWS.html?Funcao=&login="+login+"&senha="+senha+"&codEmpresa="+parm+"&indice="+indice;
+    	console.log(urle);
+		var promise=$http.get(urle)
+		.then(function (response){
+			retorno=response.data;
+			$scope.retorno=retorno;
+			console.log("retornou dados");
+			console.log(retorno);
+		}, function deuRuim(response) {
+        	$scope.retorno = '{"erro":"Falhou","codigo":"'+response.status+'"}';
+        	console.log("retornou erro");
+    	});
+		return retorno;
+	}
 });
 
 apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval){
@@ -80,6 +100,27 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
 	              	$scope.$apply();
 	              } catch(e){}
 */	        }
+	        conta++;
+    	}, 100);
+    	return $scope.retorno;
+	}
+
+	$scope.chamaAtendimentos=function(parm, indice){
+		var resposta=servico.carregaAtendimentos(parm, indice, $http, $scope);
+		var n=0;
+		var conta=0;
+		$scope.intervalPromise = $interval(function(){
+			try {
+				n=$scope.retorno.mais.length;
+			} catch(e){}
+			console.log('n:'+n+',conta:'+conta);
+	        if (n > 0 || conta > 50)
+	        {
+	        	console.log("fechando...");
+	              console.log($scope.retorno);
+	              $interval.cancel($scope.intervalPromise);
+	              putMemo('atendimentos',$scope.retorno);
+	        }
 	        conta++;
     	}, 100);
     	return $scope.retorno;
