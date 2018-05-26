@@ -50,7 +50,7 @@
 
 <div ng-app="myApp" id="topo">
 <div class="container">
-    <div class="cantonado">
+    <div class="cantonado" id="grandeCantonado">
         <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <span style="float: right;"><b>Cliente</b></span>
@@ -69,9 +69,8 @@
         </div>
 
         <br>
-        <br>
 
-                <div id="idScopo2" ng-app="exibeApk" ng-controller="displayCtrl">
+                <div id="idScopo2" ng-app="exibeApk" ng-controller="displayCtrl" style="display: none;">
                     <div class="row" style="width: 800px">
                         <div class="hidden-xs hidden-sm col-md-5 col-lg-5">
                             <b>Nome</b>
@@ -83,7 +82,6 @@
                             <b>País</b>
                         </div>
                     </div>
-                    Valor: {{ valor | currency }}, {{ ide }}, {{ data | date }}
         <br>
 
                     <div class="row" ng-repeat="pessoa in pessoas" style="width: 800px;">
@@ -105,8 +103,14 @@
                     </div>
                 </div>
 
-        <br>
         <div id="idScopoListaClientes" ng-app="listaClientesApk" ng-controller="listaClientesCtrl" style="display: none;" ng-csp>
+            <center>
+                <span ng-show="indice < 1" ng-click="urNada();" style="cursor:pointer;"><img src="img/prevD.png"></span>
+                <span ng-show="indice > 0" ng-click="pgCli('V');" style="cursor:pointer;"><img src="img/prev.png"></span>
+                &nbsp;
+                <span ng-show="mais < 1" ng-click="urNada();" style="cursor:pointer;"><img src="img/nexD.png"></span>
+                <span ng-show="mais > 0" ng-click="pgCli('F');" style="cursor:pointer;"><img src="img/nex.png"></span>
+            </center>
             <div class="row" ng-repeat="cliente in clientes" style="width: 800px;">
                 <span style="padding: 10px;width:350px;height:50px;left:0px;right:0px;margin:auto;position: absolute;top: {{cliente.tope}}px;font-size: 25px;cursor:pointer;" class="cantinhos" ng-click="fala(cliente.id);">{{ cliente.fantasia }}</span><br>
             </div>

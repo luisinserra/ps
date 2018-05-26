@@ -97,6 +97,8 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
 	$scope.exibeListaClientes=exibeListaClientes;
 	$scope.ide='um';
 	$scope.valor='200';
+	$scope.mais=0;
+	$scope.indice=0;
 
 	$scope.reLeitura=function(){
 		var parm=$scope.nome;
@@ -104,6 +106,7 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
 			parm='';
 		}
 		if (parm != ''){
+			window.localStorage.setItem('indice',0);
 			$scope.buscaCliente();
 		} else {
 			var resposta=servico.carregaClientes('kk',$http, $scope);
@@ -167,7 +170,7 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
     	return $scope.retorno;
 	}
 
-	$scope.reLeitura();
+	//$scope.reLeitura();
 });
 function goBuscaCliente(){
 	console.log("Buscar Cliente");
@@ -222,7 +225,7 @@ function exibeListaClientes(){
 	} else {
 		var escopo=angular.element(document.getElementById('idScopoListaClientes')).scope();
 		var clientes=resposta.registros;
-		var tInicial=240;
+		var tInicial=290;
 		for (var i = 0; i < clientes.length; i++) {
 			clientes[i].tope=tInicial;
 			tInicial+=50;
@@ -235,28 +238,44 @@ function exibeListaClientes(){
 }
 
 function getListaClientes(parm){
+	var indice=window.localStorage.getItem('indice');
 	var negocio = "http://clevermidia.com.br/printsource/chooseFantasia";
+	negocio = "http://localhost:8080/geosmarty/chooseFantasia";
     var funcao='';
     putMemo('encoda','S');
     putMemo('desvio','exibir');
     var parms="&parm="+parm;
     parms+="&login="+window.localStorage.getItem('userLogin');
     parms+="&senha="+window.localStorage.getItem('senha');
+    parms+="&indice="+indice;
     putMemo('retornoAx', 'trouxeResultados');
     chamaJSon(negocio,funcao,parms);
 }
 function trouxeResultados(dados){
 	var clientes=dados.registros;
+	var mais=dados.mais;
+	var indice=window.localStorage.getItem('indice');
 	var escopo=angular.element(document.getElementById('idScopoListaClientes')).scope();
-	var tInicial=240;
+	var tInicial=260;
 	for (var i = 0; i < clientes.length; i++) {
 		clientes[i].tope=tInicial;
 		tInicial+=50;
 	}
 	escopo.clientes=clientes;
+	escopo.mais=mais;
+	escopo.indice=indice;
 	document.getElementById('idScopo2').style.display='none';
 	document.getElementById('idScopoListaClientes').style.display='block';
 	escopo.$apply();
+	var n=0;
+	try {
+		n=clientes.length;
+	} catch(e){}
+	n--;
+	if (n > 0){
+		n=210+(n*50);
+		document.getElementById('grandeCantonado').style.height=n+'px';
+	}
 }
 function exibir(){
 	var dados=getMemo('dados');
@@ -273,6 +292,19 @@ function getEmpresa(codigo){
 function diz(parm){
 	alert('kkk: '+parm);
 	getEmpresa(parm);
+}
+function pgCli(parm){
+	var indice=window.localStorage.getItem('indice');
+	indice=parseInt(indice,10);
+	if (parm == 'V'){
+		indice--;
+	} else {
+		indice++;
+	}
+	window.localStorage.setItem('indice',indice);
+	var co=angular.element(document.getElementById('idScopo')).scope();
+	var parm=co.nome;
+	getListaClientes(parm);
 }
 
 apkDisplay.service('servicoDisplay', function(){
@@ -294,6 +326,7 @@ apkListaClientes.controller('listaClientesCtrl', function($scope){
 	$scope.ide='três';
 	$scope.tInicial=240;
 	$scope.fala=diz;
+	$scope.pgCli=pgCli;
 });
 
 //apkListaClientes.controller('listaClientesCtrl', function($scope){$scope.ide='3';});
