@@ -1,7 +1,8 @@
 var apkDisplay = angular.module('exibeApk', []);
 var apkCliente = angular.module('clienteApk', []);
 var apkListaClientes=angular.module('listaClientesApk',[]);
-var containerApp = angular.module('myApp',['clienteApk', 'exibeApk', 'listaClientesApk']);
+var apkAtendimentos=angular.module('atendimentosApk',[]);
+var containerApp = angular.module('myApp',['clienteApk', 'exibeApk', 'listaClientesApk','atendimentosApk']);
 apkCliente.service('servico', function(){
 	this.fnServico=function(parm,$scope){
 		console.log('Serviço recebeu '+parm);
@@ -42,7 +43,7 @@ apkCliente.service('servico', function(){
 		var conta=0;
 		var login=window.localStorage.getItem('userLogin');
     	var senha=window.localStorage.getItem('senha');
-    	var urle="http://localhost:8080/geosmarty/getAtendimentosWS.html?Funcao=&login="+login+"&senha="+senha+"&codEmpresa="+parm+"&indice="+indice;
+    	var urle="http://localhost:8080/geosmarty/getAtendimentosWS.html?Funcao=&login="+login+"&senha="+senha+"&codEmpresa="+parm+"&indice="+indice+"&utf=S";
     	console.log(urle);
 		var promise=$http.get(urle)
 		.then(function (response){
@@ -95,6 +96,7 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
 	$scope.callDisplay=toDisplay;
 	$scope.buscaCliente=chamaListaCliente;
 	$scope.exibeListaClientes=exibeListaClientes;
+	$scope.exibeAtendimentos=exibeAtendimentos;
 	$scope.ide='um';
 	$scope.valor='200';
 	$scope.mais=0;
@@ -142,6 +144,7 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
 	              console.log($scope.retorno);
 	              $interval.cancel($scope.intervalPromise);
 	              putMemo('atendimentos',$scope.retorno);
+	              $scope.exibeAtendimentos();
 	        }
 	        conta++;
     	}, 100);
@@ -285,12 +288,9 @@ function getEmpresa(codigo){
 	var dados=getMemo('dados');
 	var escopo=angular.element(document.getElementById('idScopo')).scope();
 	escopo.chamaAtendimentos(codigo,0);
-	//var clientes=dados.registros;
-	//var cliente=getJsonByCampo(clientes,'id',codigo);
-
 }
-function diz(parm){
-	alert('kkk: '+parm);
+function getCliente(parm){
+	window.localStorage.setItem('indiceAtd',0);
 	getEmpresa(parm);
 }
 function pgCli(parm){
@@ -305,6 +305,26 @@ function pgCli(parm){
 	var co=angular.element(document.getElementById('idScopo')).scope();
 	var parm=co.nome;
 	getListaClientes(parm);
+}
+
+
+function exibeAtendimentos(){
+	console.log("exibeAtendimentos mudando de escopo...");
+	var escopo=getScopo('idScopoAtendimentos');
+	escopo.exibeAtendimentos();
+}
+function pgAtd(parm){
+	var indice=window.localStorage.getItem('indiceAtd');
+	indice=parseInt(indice,10);
+	if (parm == 'V'){
+		indice--;
+	} else {
+		indice++;
+	}
+	window.localStorage.setItem('indiceAtd',indice);
+	var co=getScopo('idScopoAtendimentos');
+	//var parm=co.nome;
+	//getListaClientes(parm);
 }
 
 apkDisplay.service('servicoDisplay', function(){
@@ -325,8 +345,124 @@ apkListaClientes.controller('listaClientesCtrl', function($scope){
 	console.log('controller listaClientes');
 	$scope.ide='três';
 	$scope.tInicial=240;
-	$scope.fala=diz;
+	$scope.pegaCliente=getCliente;
 	$scope.pgCli=pgCli;
 });
 
-//apkListaClientes.controller('listaClientesCtrl', function($scope){$scope.ide='3';});
+
+
+apkAtendimentos.service('servicosAtendimentos', function(){
+	this.exibeAtendimentos=function($scope){
+		var dados=getMemo('atendimentos');
+		var erro=dados.erro;
+		if (erro != ''){
+			alert("Erro: "+erro);
+		} else {
+			var atendimentos=dados.registros;
+			$scope=getScopo('idScopoAtendimentos');
+			$scope.putEmpresaAtendimentos();
+		}
+	}
+	this.putEmpresaAtendimentos=function(){
+		putMemo('conta',0);
+		$scope=getScopo('idScopoAtendimentos');
+		$scope.iterateAtendimentos();
+	}
+	this.iterateAtendimentos=function(){
+		var atendimentos=getMemo('atendimentos').registros;
+		var k=atendimentos.length;k=parseInt(k,10);
+		var conta=getMemo('conta');conta=parseInt(conta,10);
+		if (conta < k){
+			$scope.trataAtendimentoEmpresa();
+		} else {
+			$scope.finalizaAtendimentoEmpresa();
+		}
+	}
+	this.trataAtendimentoEmpresa=function(){
+		$http=$scope.http;
+		var conta=getMemo('conta');conta=parseInt(conta,10);
+		var atendimentos=getMemo('atendimentos').registros;
+		var atendimento=atendimentos[conta];
+		var codigo=atendimento.id;
+		var urle="http://localhost:8080/geosmarty/ajax/getAtributoDeClasseWS.html?Funcao=";
+		var parms="&login="+window.localStorage.getItem('userLogin');
+    	parms+="&senha="+window.localStorage.getItem('senha');
+	    parms+="&id="+codigo;
+	    parms+="&nomeTabela=GtAtendimentos";
+	    parms+="&atributo=gtCliente";
+	    parms+="&utf=S";
+	    urle+=parms;
+	    var promise=$http.get(urle)
+		.then(function (response){
+			retorno=response.data;
+			retorno.erro='';
+			retorno.codigo='200';
+			$scope.retorno=retorno;
+			console.log("retornou dados");
+			var apelido=retorno.registros[0].apelido;
+			$scope.pegaEmpresaDoContato();
+		}, function deuRuim(response) {
+        	$scope.retorno = '{"erro":"Falha buscando contato do atendimento.","codigo":"'+response.status+'"}';
+        	console.log("retornou erro");
+    	});
+	}
+	this.pegaEmpresaDoContato=function(){
+		var conta=getMemo('conta');conta=parseInt(conta,10);
+		var dados=getMemo('atendimentos');
+		var atendimentos=getMemo('atendimentos').registros;
+		var atendimento=atendimentos[conta];
+		var contato=$scope.retorno.registros[0];
+		putMemo('contato',contato);
+		$http=$scope.http;
+		var codigo=contato.id;
+		var urle="http://localhost:8080/geosmarty/ajax/getAtributoDeClasseWS.html?Funcao=";
+		var parms="&login="+window.localStorage.getItem('userLogin');
+    	parms+="&senha="+window.localStorage.getItem('senha');
+	    parms+="&id="+codigo;
+	    parms+="&nomeTabela=GtContatosEmpresa";
+	    parms+="&atributo=gtEmpresa";
+	    parms+="&utf=S";
+	    urle+=parms;
+	    var promise=$http.get(urle)
+		.then(function (response){
+			retorno=response.data;
+			retorno.erro='';
+			retorno.codigo='200';
+			$scope.retorno=retorno;
+			console.log("retornou dados");
+			atendimento.apelidoContato=contato.apelido;
+			atendimento.nomeContato=contato.nome;
+			atendimento.fantasia=retorno.registros[0].fantasia;
+			atendimento.razao=retorno.registros[0].razaoSocial;
+			atendimentos[conta]=atendimento;
+			dados.registros=atendimentos;
+			putMemo('atendimentos',dados);
+			conta++;
+			putMemo('conta',conta);
+			$scope.iterateAtendimentos();
+		}, function deuRuim(response) {
+        	$scope.retorno = '{"erro":"Falha buscando contato do atendimento.","codigo":"'+response.status+'"}';
+        	console.log("retornou erro");
+    	});
+	}
+	this.finalizaAtendimentoEmpresa=function(){
+		console.log("Finalizou colocação de empresa no atendimento");
+		var escopo=getScopo('idScopoAtendimentos');
+		var atendimentos=getMemo('atendimentos').registros;
+		escopo.atendimentos=atendimentos;
+		document.getElementById('idScopo2').style.display='none';
+		document.getElementById('idScopoListaClientes').style.display='none';
+		document.getElementById('idScopoAtendimentos').style.display='block'
+	}
+});
+apkAtendimentos.controller('atendimentosCtrl', function($scope, servicosAtendimentos, $http){
+	console.log('controller atendimentos');
+	$scope.ide='quatro';
+	$scope.exibeAtendimentos=servicosAtendimentos.exibeAtendimentos;
+	$scope.putEmpresaAtendimentos=servicosAtendimentos.putEmpresaAtendimentos;
+	$scope.iterateAtendimentos=servicosAtendimentos.iterateAtendimentos;
+	$scope.trataAtendimentoEmpresa=servicosAtendimentos.trataAtendimentoEmpresa;
+	$scope.finalizaAtendimentoEmpresa=servicosAtendimentos.finalizaAtendimentoEmpresa;
+	$scope.pegaEmpresaDoContato=servicosAtendimentos.pegaEmpresaDoContato;
+	$scope.http=$http;
+});

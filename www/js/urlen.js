@@ -2493,3 +2493,7 @@ function getJsonByCampo(json,campo,valor){
 	}
 	return retorno;
 }
+function getScopo(parm){
+	var escopo=angular.element(document.getElementById(parm)).scope();
+	return escopo;
+}

@@ -112,9 +112,55 @@
                 <span ng-show="mais > 0" ng-click="pgCli('F');" style="cursor:pointer;"><img src="img/nex.png"></span>
             </center>
             <div class="row" ng-repeat="cliente in clientes" style="width: 800px;">
-                <span style="padding: 10px;width:350px;height:50px;left:0px;right:0px;margin:auto;position: absolute;top: {{cliente.tope}}px;font-size: 25px;cursor:pointer;" class="cantinhos" ng-click="fala(cliente.id);">{{ cliente.fantasia }}</span><br>
+                <span style="padding: 10px;width:350px;height:50px;left:0px;right:0px;margin:auto;position: absolute;top: {{cliente.tope}}px;font-size: 25px;cursor:pointer;" class="cantinhos" ng-click="pegaCliente(cliente.id);">{{ cliente.fantasia }}</span><br>
             </div>
         </div>
+
+        <div id="idScopoAtendimentos" ng-app="atendimentosApk" ng-controller="atendimentosCtrl" style="display: none;" ng-csp>
+            <center>
+                <span ng-show="indice < 1" ng-click="urNada();" style="cursor:pointer;"><img src="img/prevD.png"></span>
+                <span ng-show="indice > 0" ng-click="pgAtd('V');" style="cursor:pointer;"><img src="img/prev.png"></span>
+                &nbsp;
+                <span ng-show="mais < 1" ng-click="urNada();" style="cursor:pointer;"><img src="img/nexD.png"></span>
+                <span ng-show="mais > 0" ng-click="pgAtd('F');" style="cursor:pointer;"><img src="img/nex.png"></span>
+            </center>
+            <div class="row">
+                <div class="hidden-xs hidden-sm col-md-2 col-lg-2">
+                    <b>Data</b>
+                </div>
+                <div class="hidden-xs hidden-sm col-md-3 col-lg-3">
+                    <b>Cliente</b>
+                </div>
+                <div class="hidden-xs hidden-sm col-md-3 col-lg-3">
+                    <b>Contato</b>
+                </div>
+                <div class="hidden-xs hidden-sm col-md-4 col-lg-4">
+                    <b>Descrição</b>
+                </div>
+            </div>
+            <div class="row" ng-repeat="atendimento in atendimentos">
+                <div class="hidden-md hidden-lg col-xs-2 col-sm-2"><span style="float: right;"><b>Data</b></span></div>
+                <div class="col-xs-10 col-sm-10 col-md-2 col-lg-2">
+                    {{ atendimento.datahora }}
+                </div>
+
+                <div class="hidden-md hidden-lg col-xs-2 col-sm-2"><span style="float: right;"><b>Data</b></span></div>
+                <div class="col-xs-10 col-sm-10 col-md-3 col-lg-3">
+                    {{ atendimento.fantasia }}
+                </div>
+
+                <div class="hidden-md hidden-lg col-xs-2 col-sm-2"><span style="float: right;"><b>Contato</b></span></div>
+                <div class="col-xs-10 col-sm-10 col-md-3 col-lg-3">
+                    {{ atendimento.nomeContato }}
+                </div>
+
+                <div class="hidden-md hidden-lg col-xs-2 col-sm-2"><span style="float: right;"><b>Descrição</b></span></div>
+                <div class="col-xs-10 col-sm-10 col-md-4 col-lg-4">
+                    {{ atendimento.descricao }}
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 </div>
