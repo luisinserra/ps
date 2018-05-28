@@ -51,7 +51,6 @@ apkCliente.service('servico', function(){
 			retorno.erro='';
 			retorno.codigo='200';
 			$scope.retorno=retorno;
-			console.log("retornou dados");
 			console.log(retorno);
 		}, function deuRuim(response) {
         	$scope.retorno = '{"erro":"Falhou","codigo":"'+response.status+'"}';
@@ -174,6 +173,7 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
 	}
 
 	//$scope.reLeitura();
+	$scope.chamaAtendimentos('',0);
 });
 function goBuscaCliente(){
 	console.log("Buscar Cliente");
@@ -205,6 +205,7 @@ function toDisplay(){
 	console.log(pessoas);
 	var scopo2=angular.element(document.getElementById('idScopo2'));
 	var sc=scopo2.scope();
+	document.getElementById('idScopoAtendimentos').style.display='none';
 	sc.pessoas=pessoas;
 	//sc.$apply();
 }
@@ -235,6 +236,7 @@ function exibeListaClientes(){
 		}
 		escopo.clientes=clientes;
 		document.getElementById('idScopo2').style.display='none';
+		document.getElementById('idScopoAtendimentos').style.display='none';
 		document.getElementById('idScopoListaClientes').style.display='block';
 		//escopo.$apply();
 	}
@@ -269,6 +271,7 @@ function trouxeResultados(dados){
 	escopo.indice=indice;
 	document.getElementById('idScopo2').style.display='none';
 	document.getElementById('idScopoListaClientes').style.display='block';
+	document.getElementById('idScopoAtendimentos').style.display='none';
 	escopo.$apply();
 	var n=0;
 	try {
@@ -285,6 +288,7 @@ function exibir(){
 	trouxeResultados(dados);
 }
 function getEmpresa(codigo){
+	putMemo('codEmpresa',codigo);
 	var dados=getMemo('dados');
 	var escopo=angular.element(document.getElementById('idScopo')).scope();
 	escopo.chamaAtendimentos(codigo,0);
@@ -321,8 +325,18 @@ function pgAtd(parm){
 	} else {
 		indice++;
 	}
+	var co=angular.element(document.getElementById('idScopo')).scope();
+	var parm=co.nome;
+	var codigo="";
+	if (parm == undefined){
+		parm="";
+	}
+	if (parm != ''){
+		codigo=getMemo('codEmpresa');
+	}
 	window.localStorage.setItem('indiceAtd',indice);
-	var co=getScopo('idScopoAtendimentos');
+	var escopo=angular.element(document.getElementById('idScopo')).scope();
+	escopo.chamaAtendimentos(codigo,indice);
 	//var parm=co.nome;
 	//getListaClientes(parm);
 }
@@ -398,7 +412,6 @@ apkAtendimentos.service('servicosAtendimentos', function(){
 			retorno.erro='';
 			retorno.codigo='200';
 			$scope.retorno=retorno;
-			console.log("retornou dados");
 			var apelido=retorno.registros[0].apelido;
 			$scope.pegaEmpresaDoContato();
 		}, function deuRuim(response) {
@@ -429,7 +442,6 @@ apkAtendimentos.service('servicosAtendimentos', function(){
 			retorno.erro='';
 			retorno.codigo='200';
 			$scope.retorno=retorno;
-			console.log("retornou dados");
 			atendimento.apelidoContato=contato.apelido;
 			atendimento.nomeContato=contato.nome;
 			atendimento.fantasia=retorno.registros[0].fantasia;
@@ -450,6 +462,10 @@ apkAtendimentos.service('servicosAtendimentos', function(){
 		var escopo=getScopo('idScopoAtendimentos');
 		var atendimentos=getMemo('atendimentos').registros;
 		escopo.atendimentos=atendimentos;
+		var indice=window.localStorage.getItem('indiceAtd');
+		escopo.indice=indice;
+		var mais=getMemo('atendimentos').mais;
+		escopo.mais=mais;
 		document.getElementById('idScopo2').style.display='none';
 		document.getElementById('idScopoListaClientes').style.display='none';
 		document.getElementById('idScopoAtendimentos').style.display='block'
@@ -458,6 +474,7 @@ apkAtendimentos.service('servicosAtendimentos', function(){
 apkAtendimentos.controller('atendimentosCtrl', function($scope, servicosAtendimentos, $http){
 	console.log('controller atendimentos');
 	$scope.ide='quatro';
+	$scope.pgAtd=pgAtd;
 	$scope.exibeAtendimentos=servicosAtendimentos.exibeAtendimentos;
 	$scope.putEmpresaAtendimentos=servicosAtendimentos.putEmpresaAtendimentos;
 	$scope.iterateAtendimentos=servicosAtendimentos.iterateAtendimentos;
