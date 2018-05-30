@@ -11,7 +11,7 @@ apkNovoAtd.service('servicos', function(){
 		var escopo=getScopo('topo');var $http=escopo.http;
 		var parm=escopo.tParm;
 		escopo.indice=window.localStorage.getItem('indice');
-		var urle="http://localhost:8080/geosmarty/chooseFantasia.html?Funcao=";
+		var urle="http://clevermidia.com.br/printsource/chooseFantasia.html?Funcao=";
 		var parms="&login="+window.localStorage.getItem('userLogin');
     	parms+="&senha="+window.localStorage.getItem('senha');
     	parms+="&parm="+parm;
@@ -52,7 +52,7 @@ apkNovoAtd.service('servicos', function(){
 
 	this.pegaCliente=function(codigo){
 		var escopo=getScopo('topo');var $http=escopo.http;
-		var urle="http://localhost:8080/geosmarty/getRegistroWS.html?Funcao=";
+		var urle="http://clevermidia.com.br/printsource/getRegistroWS.html?Funcao=";
 		var parms="&login="+window.localStorage.getItem('userLogin');
     	parms+="&senha="+window.localStorage.getItem('senha');
     	parms+="&nomeClasse=GtEmpresas";
@@ -83,7 +83,7 @@ apkNovoAtd.service('servicos', function(){
 		document.getElementById('divListaContatos').style.display='block';
 		var escopo=getScopo('topo');var $http=escopo.http;
 		var codigo=escopo.empresa.id;
-		var urle="http://localhost:8080/geosmarty/getContatosDaEmpresa.html?Funcao=";
+		var urle="http://clevermidia.com.br/printsource/getContatosDaEmpresa.html?Funcao=";
 		var parms="&login="+window.localStorage.getItem('userLogin');
     	parms+="&senha="+window.localStorage.getItem('senha');
 	    parms+="&codEmpresa="+codigo;
@@ -136,7 +136,7 @@ apkNovoAtd.service('servicos', function(){
 
 	this.getListaStatus=function(){
 		var escopo=getScopo('topo');var $http=escopo.http;
-		var urle="http://localhost:8080/geosmarty/ajax/getListaTabelaWS.html?Funcao=";
+		var urle="http://clevermidia.com.br/printsource/ajax/getListaTabelaWS.html?Funcao=";
 		var parms="&login="+window.localStorage.getItem('userLogin');
     	parms+="&senha="+window.localStorage.getItem('senha');
 	    parms+="&nomeTabela=GtStatusAtendimento";
@@ -175,7 +175,7 @@ apkNovoAtd.service('servicos', function(){
 			var dataHora=escopo.tData.formatData();
 			var texto=escopo.tDesc;
 			var codStatus=escopo.cbStatus;
-			var urle="http://localhost:8080/geosmarty/gravaNovoAtendimentoWS.html?Funcao=";
+			var urle="http://clevermidia.com.br/printsource/gravaNovoAtendimentoWS.html?Funcao=";
 			var parms="&login="+window.localStorage.getItem('userLogin');
 	    	parms+="&senha="+window.localStorage.getItem('senha');
 		    parms+="&codCliente="+codCliente;

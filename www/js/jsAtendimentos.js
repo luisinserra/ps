@@ -43,7 +43,7 @@ apkCliente.service('servico', function(){
 		var conta=0;
 		var login=window.localStorage.getItem('userLogin');
     	var senha=window.localStorage.getItem('senha');
-    	var urle="http://localhost:8080/geosmarty/getAtendimentosWS.html?Funcao=&login="+login+"&senha="+senha+"&codEmpresa="+parm+"&indice="+indice+"&utf=S";
+    	var urle="http://clevermidia.com.br/printsource/getAtendimentosWS.html?Funcao=&login="+login+"&senha="+senha+"&codEmpresa="+parm+"&indice="+indice+"&utf=S";
     	console.log(urle);
 		var promise=$http.get(urle)
 		.then(function (response){
@@ -249,7 +249,7 @@ function exibeListaClientes(){
 function getListaClientes(parm){
 	var indice=window.localStorage.getItem('indice');
 	var negocio = "http://clevermidia.com.br/printsource/chooseFantasia";
-	negocio = "http://localhost:8080/geosmarty/chooseFantasia";
+	negocio = "http://clevermidia.com.br/printsource/chooseFantasia";
     var funcao='';
     putMemo('encoda','S');
     putMemo('desvio','exibir');
@@ -402,7 +402,7 @@ apkAtendimentos.service('servicosAtendimentos', function(){
 		var atendimentos=getMemo('atendimentos').registros;
 		var atendimento=atendimentos[conta];
 		var codigo=atendimento.id;
-		var urle="http://localhost:8080/geosmarty/ajax/getAtributoDeClasseWS.html?Funcao=";
+		var urle="http://clevermidia.com.br/printsource/ajax/getAtributoDeClasseWS.html?Funcao=";
 		var parms="&login="+window.localStorage.getItem('userLogin');
     	parms+="&senha="+window.localStorage.getItem('senha');
 	    parms+="&id="+codigo;
@@ -432,7 +432,7 @@ apkAtendimentos.service('servicosAtendimentos', function(){
 		putMemo('contato',contato);
 		$http=$scope.http;
 		var codigo=contato.id;
-		var urle="http://localhost:8080/geosmarty/ajax/getAtributoDeClasseWS.html?Funcao=";
+		var urle="http://clevermidia.com.br/printsource/ajax/getAtributoDeClasseWS.html?Funcao=";
 		var parms="&login="+window.localStorage.getItem('userLogin');
     	parms+="&senha="+window.localStorage.getItem('senha');
 	    parms+="&id="+codigo;
