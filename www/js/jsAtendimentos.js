@@ -172,6 +172,10 @@ apkCliente.controller('clienteCtrl', function($scope, servico, $http, $interval)
     	return $scope.retorno;
 	}
 
+	$scope.novoAtendimento=function(){
+		location.href="novoAtendimento.html";
+	}
+
 	//$scope.reLeitura();
 	$scope.chamaAtendimentos('',0);
 });
@@ -483,3 +487,9 @@ apkAtendimentos.controller('atendimentosCtrl', function($scope, servicosAtendime
 	$scope.pegaEmpresaDoContato=servicosAtendimentos.pegaEmpresaDoContato;
 	$scope.http=$http;
 });
+
+function novoAtendimento(){
+	if (window.confirm("Novo Atendimento ?")){
+		location.href="novoAtendimento.html";
+	}
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <title>PrintSource - Atendimentos</title> 
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/geral.css">
+    <script type="text/javascript" src="js/urlen.js"></script>
+    <script type="text/javascript" src="http://code.angularjs.org/1.7.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.7.0/i18n/angular-locale_pt-br.js"></script>
+    <script type="text/javascript" src="js/jsNovoAtendimento.js"></script>
+</head>
+
+<body>
+<div class="menu1" id='m1'>
+    <ul>
+        <li><a class="menu1one" href="index.html">Home</a></li>
+    </ul> 
+
+    <ul>
+        <li style="z-index: 7070;"><a class="menu1two"
+            href="javascript:k=1;">Menu <!--[if gte IE 7]><!--></a>
+            <!--<![endif]-->
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li><a href="Clientes.html">Clientes</a></li>
+                                <li><a href="contatos.html">Contatos</a></li>
+                                <li><a href="OS.html">OS</a></li>
+                                <li><a href="atendimentos.html">Atendimentos</a></li>
+                                <li><a href="checkin.html">Checkin</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> <!--[if lte IE 6]></a><![endif]--></li>
+    </ul>
+</div>
+
+<center>
+    <img src="img/logo_printsource.png">
+</center>
+
+<div ng-app="novoAtdApk" id="topo" ng-controller="novoAtdCtrl" ng-csp>
+
+	<div class="container cantonado" id="grandeCantonado">
+		<div class="row" id="divPesqFantasia">
+            <div class="col-xs-2 col-sm-2 col-md-3 col-lg-3">
+                <span style="float: right;"><b>Fantasia</b></span>
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <input type="text" id="tParm" size="10" maxlength="40" ng-model="tParm">
+                <br>
+                <br>
+                <span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" ng-click="initBusca();">Pesquisar</span>
+            </div>
+		</div>
+		<div class="row" id="divListaContatos" style="display: none;">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				<span class="hidden-xs hidden-sm">
+                	<span style="float: right;"><b>Empresa</b>: {{ empresa.fantasia }}</span>
+                </span>
+                <span class="hidden-md hidden-lg">
+                	{{ empresa.fantasia }}
+                </span>
+				
+			</div>
+            <div class="col-xs-3 col-sm-3 col-md-1 col-lg-1">
+                <span style="float: right;"><b>Contato</b></span>
+            </div>
+            <div class="col-xs-9 col-sm-9 col-md-7 col-lg-7">
+                <select ng-model="cbContatos" ng-options="contato.id as contato.nome for contato in contatos">
+                </select>
+                &nbsp;
+                <span class="hidden-md hidden-lg">
+                	<br><br>
+                </span>
+                <span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" ng-click="gotContato();">Selecionar</span>
+            </div>
+		</div>
+
+	<br>
+		<div id="idListaClientes" style="display: none;">
+	        <center>
+	            <span ng-show="indice < 1" ng-click="urNada();" style="cursor:pointer;"><img src="img/prevD.png"></span>
+	            <span ng-show="indice > 0" ng-click="pgCli('V');" style="cursor:pointer;"><img src="img/prev.png"></span>
+	            &nbsp;
+	            <span ng-show="mais < 1" ng-click="urNada();" style="cursor:pointer;"><img src="img/nexD.png"></span>
+	            <span ng-show="mais > 0" ng-click="pgCli('F');" style="cursor:pointer;"><img src="img/nex.png"></span>
+	        </center>
+	        <div class="row" ng-repeat="cliente in clientes" style="width: 800px;">
+	            <span style="padding: 10px;width:350px;height:50px;left:0px;right:0px;margin:auto;position: absolute;top: {{cliente.tope}}px;font-size: 25px;cursor:pointer;" class="cantinhos" ng-click="pegaCliente(cliente.id);">{{ cliente.fantasia }}</span><br>
+	        </div>
+	    </div>
+
+	</div>
+</div>
+
+</body>
+</html>
