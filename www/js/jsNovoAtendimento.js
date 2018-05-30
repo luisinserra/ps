@@ -103,6 +103,7 @@ apkNovoAtd.service('servicos', function(){
 			document.getElementById('divPesqFantasia').style.display='none';
 			document.getElementById('idListaClientes').style.display='none';
 			document.getElementById('divListaContatos').style.display='block';
+			document.getElementById('divListaStatus').style.display='none';
 			escopo.exibeContatos();
 		}, function deuRuim(response) {
         	escopo.retorno = '{"erro":"Falhou","codigo":"'+response.status+'"}';
@@ -120,12 +121,83 @@ apkNovoAtd.service('servicos', function(){
 	this.gotContato=function(){
 		var escopo=getScopo('topo');
 		var codContato=escopo.cbContatos;
-		var contatos=getMemo('contatos');
-		putMemo('Angular','topo');
-		var contato=getJsonByCampo(contatos,"id",codContato);
-		escopo.contato=contato;
-		putMemo('contato',contato);
-		document.getElementById('divListaContatos').style.display='none';
+		if (codContato == undefined){
+			alert("Escolha um contato");
+		} else {
+			var contatos=getMemo('contatos');
+			putMemo('Angular','topo');
+			var contato=getJsonByCampo(contatos,"id",codContato);
+			escopo.contato=contato;
+			putMemo('contato',contato);
+			document.getElementById('divListaContatos').style.display='none';
+			escopo.getListaStatus();
+		}
+	}
+
+	this.getListaStatus=function(){
+		var escopo=getScopo('topo');var $http=escopo.http;
+		var urle="http://localhost:8080/geosmarty/ajax/getListaTabelaWS.html?Funcao=";
+		var parms="&login="+window.localStorage.getItem('userLogin');
+    	parms+="&senha="+window.localStorage.getItem('senha');
+	    parms+="&nomeTabela=GtStatusAtendimento";
+	    parms+="&campoSort=nome";
+	    parms+="&utf=S";
+	    urle+=parms;
+	    var retorno='';
+	    var promise=$http.get(urle)
+		.then(function (response){
+			retorno=response.data;
+			retorno.erro='';
+			retorno.codigo='200';
+			escopo.retorno=retorno;
+			putMemo('retorno',retorno);
+			escopo.states=retorno.registros;
+			document.getElementById('divPesqFantasia').style.display='none';
+			document.getElementById('idListaClientes').style.display='none';
+			document.getElementById('divListaContatos').style.display='none';
+			document.getElementById('divListaStatus').style.display='block';
+		}, function deuRuim(response) {
+        	escopo.retorno = '{"erro":"Falhou","codigo":"'+response.status+'"}';
+        	console.log("retornou erro");
+    	});
+		return retorno;
+	}
+
+	this.gotAtendimento=function(){
+		var escopo=getScopo('topo');var $http=escopo.http;
+		var codStatus=escopo.cbStatus;
+		if (codStatus == undefined){
+			alert("Escolha um status");
+		} else if (escopo.tDesc == undefined){
+			alert("Descreva o atendimento");
+		} else {
+			var codCliente=escopo.contato.id;
+			var dataHora=escopo.tData.formatData();
+			var texto=escopo.tDesc;
+			var codStatus=escopo.cbStatus;
+			var urle="http://localhost:8080/geosmarty/gravaNovoAtendimentoWS.html?Funcao=";
+			var parms="&login="+window.localStorage.getItem('userLogin');
+	    	parms+="&senha="+window.localStorage.getItem('senha');
+		    parms+="&codCliente="+codCliente;
+		    parms+="&datahora="+dataHora+' 00:00';
+		    parms+="&texto="+texto;
+		    parms+="&codStatus="+codStatus;
+		    urle+=parms;
+		    var retorno='';
+		    var promise=$http.get(urle)
+			.then(function (response){
+				retorno={"erro":"","codigo":"200"};
+				escopo.retorno=retorno;
+				alert("Atendimento gravado com sucesso");
+				escopo.cancelaAtendimento();
+			}, function deuRuim(response) {
+	        	escopo.retorno = '{"erro":"Falhou","codigo":"'+response.status+'"}';
+	        	console.log("retornou erro");
+	        	var msg="Erro: "+retorno.erro+"\nCódigo: "+retorno.codigo;
+	        	alert(msg);
+	    	});
+			return retorno;
+		}
 	}
 });
 apkNovoAtd.controller('novoAtdCtrl', function($scope, servicos, $http){
@@ -136,6 +208,10 @@ apkNovoAtd.controller('novoAtdCtrl', function($scope, servicos, $http){
 	$scope.getContatosEmpresa=servicos.getContatosEmpresa;
 	$scope.exibeContatos=servicos.exibeContatos;
 	$scope.gotContato=servicos.gotContato;
+	$scope.getListaStatus=servicos.getListaStatus;
+	$scope.cancelaAtendimento=cancelaAtendimento;
+	$scope.gotAtendimento=servicos.gotAtendimento;
+	$scope.tData=new Date();
 	$scope.http=$http;
 
 });
@@ -153,4 +229,6 @@ function pgCli(parm){
 	escopo.goBuscaFantasia();
 }
 
-
+function cancelaAtendimento(){
+	location.href="atendimentos.html";
+}

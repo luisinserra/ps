@@ -52,17 +52,27 @@
 <div ng-app="myApp" id="topo">
 <div class="container">
     <div class="cantonado" id="grandeCantonado">
-        <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <span style="float: right;"><b>Cliente</b></span>
-            </div>
-            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                <div id="idScopo" ng-app="clienteApk" ng-controller="clienteCtrl" ng-csp>
+        <div id="idScopo" ng-app="clienteApk" ng-controller="clienteCtrl" ng-csp>
+            <div class="row">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <span style="float: right;"><b>Cliente</b></span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
                     <input type="text" id="tParm" size="10" maxlength="40" ng-model="nome">
-                    <br>
-                    <br>
-                    <span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" ng-click="reLeitura();">Pesquisar</span>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                    <span style="float: right;">
+                        <span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" ng-click="reLeitura();">Pesquisar</span>
+                    </span>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
                     &nbsp;
+                </div>
+                <span class="hidden-md hidden-lg"><br><br></span>
+                <div class="col-xs-8 col-sm-8 col-md-7 col-lg-7">
                     <span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" ng-click="novoAtendimento();">Novo Atendimento</span>
                     <br>
                 </div>
@@ -145,20 +155,21 @@
                     {{ atendimento.datahora }}
                 </div>
 
-                <div class="hidden-md hidden-lg col-xs-2 col-sm-2"><span style="float: right;"><b>Data</b></span></div>
+                <div class="hidden-md hidden-lg col-xs-2 col-sm-2"><span style="float: right;"><b>Client</b></span></div>
                 <div class="col-xs-10 col-sm-10 col-md-3 col-lg-3">
                     {{ atendimento.fantasia }}
                 </div>
 
-                <div class="hidden-md hidden-lg col-xs-2 col-sm-2"><span style="float: right;"><b>Contato</b></span></div>
+                <div class="hidden-md hidden-lg col-xs-2 col-sm-2"><span style="float: right;"><b>Cntat</b></span></div>
                 <div class="col-xs-10 col-sm-10 col-md-3 col-lg-3">
                     {{ atendimento.nomeContato }}
                 </div>
 
-                <div class="hidden-md hidden-lg col-xs-2 col-sm-2"><span style="float: right;"><b>Descrição</b></span></div>
+                <div class="hidden-md hidden-lg col-xs-2 col-sm-2"><span style="float: right;"><b>Desc</b></span></div>
                 <div class="col-xs-10 col-sm-10 col-md-4 col-lg-4">
                     {{ atendimento.descricao }}
                 </div>
+                <div class="hidden-md hidden-lg col-xs-12 col-sm-12"><hr></div>
             </div>
         </div>
 

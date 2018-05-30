@@ -2047,6 +2047,20 @@ function getDataHoje()
     var today = dd+'/'+mm+'/'+yyyy;
     return today;
 }
+Date.prototype.formatData = function(){
+	var data=this;
+	var dd = data.getDate();
+    var mm = data.getMonth()+1;
+    var yyyy = data.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+    var data = dd+'/'+mm+'/'+yyyy;
+    return data;
+}
 function getSpanLogin()
 {
 	var negocio='ajax/JSONgetLogin.jsonx';

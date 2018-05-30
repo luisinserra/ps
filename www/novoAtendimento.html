@@ -86,6 +86,64 @@
                 <span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" ng-click="gotContato();">Selecionar</span>
             </div>
 		</div>
+		<div id="divListaStatus" style="display: none;">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					<span class="hidden-xs hidden-sm">
+	                	<span style="float: right;"><b>Empresa</b>: {{ empresa.fantasia }}</span>
+	                </span>
+	                <span class="hidden-md hidden-lg">
+	                	{{ empresa.fantasia }}<br>
+	                </span>
+					
+				</div>
+	            <div class="hidden-xs hidden-sm col-md-1 col-lg-1">
+	                <span style="float: right;"><b>Contato</b>:</span>
+	            </div>
+	            <div class="col-xs-9 col-sm-9 col-md-7 col-lg-7">
+	                {{ contato.nome }}
+	            </div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 col-sm-2 col-md-4 col-lg-4">
+					<span style="float: right;"><b>Data</b>:</span>
+				</div>
+				<div class="col-xs-9 col-sm-9 col-md-7 col-lg-7">
+					<input type="date" ng-model="tData" value="{{ date | date: 'yyyy-MM-dd' }}" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 col-sm-2 col-md-4 col-lg-4">
+					<span style="float: right;"><b>Status</b>:</span>
+				</div>
+				<div class="col-xs-9 col-sm-9 col-md-7 col-lg-7">
+					<select ng-model="cbStatus" ng-options="status.id as status.nome for status in states"></select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 col-sm-2 col-md-4 col-lg-4">
+					<span style="float: right;" class="hidden-xs hidden-sm"><b>Descrição</b>:</span>
+					<span style="float: right;" class="hidden-md hidden-lg"><b>Desc</b>:</span>
+				</div>
+				<div class="col-xs-9 col-sm-9 col-md-7 col-lg-7">
+					<textarea id="tDesc" ng-model="tDesc" rows="4" cols="25"></textarea>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<span style="float: right;">
+						<span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" ng-click="gotAtendimento();">Gravar</span>
+					</span>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+					&nbsp;
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-7 col-lg-7">
+					<span class="box-cinza cantinhos" style="width: 800px;padding: 10px;background-color: #267cb5;color: white;cursor:pointer;" ng-click="cancelaAtendimento();">Cancelar</span>
+				</div>
+			</div>
+		</div>
 
 	<br>
 		<div id="idListaClientes" style="display: none;">
