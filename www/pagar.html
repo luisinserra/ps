@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <title>PrintSource - Contas a Pagar</title> 
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/geral.css">
+    <script type="text/javascript" src="js/jsMenu.js"></script>
+    <script type="text/javascript" src="http://code.angularjs.org/1.7.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.7.0/i18n/angular-locale_pt-br.js"></script>
+    <script type="text/javascript" src="js/urlen.js"></script>
+    <script type="text/javascript" src="js/jsPagar.js"></script>
+</head>
+
+<body>
+<div ng-app="pagarApk" id="topo" ng-csp>
+<div ng-include="'cab.html'"></div>
+<center><h2><b>Contas a Pagar</b></h2></center>
+<div id="divPesqPagar" ng-controller="pagarCtrl">
+    <div class="container cantonado">
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                <span style="float: right;"><b>Fornecedor</b></span>
+            </div>
+            <div class="col-xs-8 col-sm-8 col-md-3 col-lg-3">
+                <input type="text" id="tForn" ng-model="tForn" size="15" maxlength="30">
+                &nbsp;
+                <img src="img/lupa.gif" style="cursor: pointer;" ng-click="goBuscaForn();">
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1">
+                <span style="float: right;"><b>Período</b></span>
+            </div>
+            <div class="col-xs-8 col-sm-8 col-md-2 col-lg-2">
+                <input type="date" id="tData1" ng-model="tData1" value="{{ date | date: 'yyyy-MM-dd' }}"/>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1">
+                <span style="float: right;"><b>Até</b></span>
+            </div>
+            <div class="col-xs-8 col-sm-8 col-md-2 col-lg-2">
+                <input type="date" id="tData2" ng-model="tData2" value="{{ date | date: 'yyyy-MM-dd' }}"/>
+            </div>
+        </div>
+        <br>
+
+    </div>
+</div>
+</div>
+</body>
+</html>
