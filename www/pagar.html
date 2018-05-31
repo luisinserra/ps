@@ -14,16 +14,17 @@
     <script type="text/javascript" src="js/jsMenu.js"></script>
     <script type="text/javascript" src="http://code.angularjs.org/1.7.0/angular.min.js"></script>
     <script type="text/javascript" src="https://code.angularjs.org/1.7.0/i18n/angular-locale_pt-br.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script type="text/javascript" src="js/urlen.js"></script>
     <script type="text/javascript" src="js/jsPagar.js"></script>
 </head>
 
 <body>
-<div ng-app="pagarApk" id="topo" ng-csp>
+<div ng-app="pagarApk" id="topo">
 <div ng-include="'cab.html'"></div>
 <center><h2><b>Contas a Pagar</b></h2></center>
 <div id="divPesqPagar" ng-controller="pagarCtrl">
-    <div class="container cantonado">
+    <div class="container cantonado" id="canto">
         <div class="row">
             <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
                 <span style="float: right;"><b>Fornecedor</b></span>
@@ -47,6 +48,7 @@
             </div>
         </div>
         <br>
+        <div class="ng-view"></div>
 
     </div>
 </div>
